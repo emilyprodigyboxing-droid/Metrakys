@@ -1,4 +1,4 @@
-import { SUPABASE_ANON_KEY, SUPABASE_URL } from "./supabase-config.js";
+import SUPABASE_CONFIG from "./supabase-config.js";
 
 const authGate = document.getElementById("auth-gate");
 const appContent = document.getElementById("app-content");
@@ -57,15 +57,44 @@ function loginErrorMessage(error) {
     return "Muitas tentativas em sequência. Aguarde um momento e tente novamente.";
   }
   if (message.includes("failed to fetch") || message.includes("network")) {
-    return "Não foi possível conectar ao serviço de autenticação. Verifique sua conexão.";
+    return "Não foi possível conectar ao Supabase. Verifique a conexão e a URL do projeto.";
   }
-  return "Não foi possível entrar. Verifique as credenciais e tente novamente.";
+  return error && error.message
+    ? `Falha ao entrar: ${error.message}`
+    : "Não foi possível entrar. Verifique as credenciais e tente novamente.";
 }
 
-function isSupabaseConfigured() {
-  return SUPABASE_URL.trim() !== "" &&
-    SUPABASE_ANON_KEY.trim() !== "" &&
-    !/YOUR-|YOUR_/i.test(SUPABASE_URL + SUPABASE_ANON_KEY);
+function configurationError() {
+  const urlValue = SUPABASE_CONFIG && SUPABASE_CONFIG.url;
+  const keyValue = SUPABASE_CONFIG && SUPABASE_CONFIG.publishableKey;
+  const url = typeof urlValue === "string" ? urlValue.trim() : "";
+  const key = typeof keyValue === "string" ? keyValue.trim() : "";
+
+  if (!url) {
+    return "Configuração inválida: informe a URL do projeto Supabase em supabase-config.js.";
+  }
+  let parsedUrl;
+  try {
+    parsedUrl = new URL(url);
+  } catch {
+    return "Configuração inválida: a URL do Supabase em supabase-config.js não é válida.";
+  }
+  if (parsedUrl.protocol !== "https:" || parsedUrl.username || parsedUrl.password) {
+    return "Configuração inválida: use a URL HTTPS do projeto Supabase, sem usuário ou senha.";
+  }
+  if (parsedUrl.pathname !== "/" || parsedUrl.search || parsedUrl.hash) {
+    return "Configuração inválida: use a URL base do projeto (por exemplo, https://<projeto>.supabase.co), sem /rest/v1/ ou outros caminhos.";
+  }
+  if (!key || /YOUR-|YOUR_/i.test(key)) {
+    return "Configuração inválida: informe a Publishable Key ou a chave anon pública em supabase-config.js.";
+  }
+  if (key.startsWith("sb_secret_") || key === "service_role") {
+    return "Configuração insegura: não use uma secret/service-role key no navegador; use a Publishable Key pública.";
+  }
+  if (!key.startsWith("sb_publishable_") && !key.startsWith("eyJ")) {
+    return "Configuração inválida: a chave deve ser uma Publishable Key (sb_publishable_) ou uma chave anon pública legada.";
+  }
+  return "";
 }
 
 passwordToggle.addEventListener("click", () => {
@@ -78,7 +107,7 @@ passwordToggle.addEventListener("click", () => {
 loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   if (!supabase) {
-    authMessage.textContent = "O serviço de autenticação não está disponível. Recarregue a página e tente novamente.";
+    authMessage.textContent = "O cliente Supabase ainda não foi inicializado. Verifique a conexão e recarregue a página.";
     authMessage.hidden = false;
     return;
   }
@@ -129,19 +158,23 @@ logoutButton.addEventListener("click", async () => {
 });
 
 async function initializeAuthentication() {
-  if (!isSupabaseConfigured()) {
-    const message = "Configure SUPABASE_URL e SUPABASE_ANON_KEY no arquivo supabase-config.js para habilitar o login.";
-    console.error(message);
-    showLogin(message);
+  const configError = configurationError();
+  if (configError) {
+    console.error(configError);
+    showLogin(configError);
     loginSubmit.disabled = true;
     return;
   }
+
+  // A configuration is valid; don't leave the login button disabled while the
+  // client/session check runs. Authentication errors are reported separately.
+  loginSubmit.disabled = false;
 
   try {
     const { createClient } = await import(
       "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
     );
-    supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    supabase = createClient(SUPABASE_CONFIG.url.trim(), SUPABASE_CONFIG.publishableKey.trim(), {
       auth: {
         persistSession: true,
         autoRefreshToken: true,
@@ -177,15 +210,11 @@ async function initializeAuthentication() {
     }
   } catch (error) {
     console.error("Falha ao inicializar a autenticação Supabase:", error);
-    showLogin("Não foi possível validar a sessão agora. Verifique a conexão e tente entrar novamente.");
-    if (!supabase) {
-      loginSubmit.disabled = true;
-    }
+    const detail = error && error.message ? ` (${error.message})` : "";
+    showLogin(`Não foi possível inicializar a autenticação Supabase${detail}. Verifique a conexão e a configuração do projeto.`);
   } finally {
     startupComplete = true;
   }
 }
 
 initializeAuthentication();
-
-          
