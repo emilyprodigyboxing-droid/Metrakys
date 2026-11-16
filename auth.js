@@ -188,5 +188,4 @@ async function initializeAuthentication() {
 
 initializeAuthentication();
 
-export const SUPABASE_URL = "sb_publishable_1rP0ivlGl8QHX7-YvHXFTg_QfjvQc4L";
-export const SUPABASE_ANON_KEY = "sb_secret_f_xGip5DJxUIrS0eqiOS2Q_5gzwYKEI";
+          
