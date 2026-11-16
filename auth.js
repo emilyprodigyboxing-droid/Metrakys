@@ -176,9 +176,9 @@ async function initializeAuthentication() {
     );
     supabase = createClient(SUPABASE_CONFIG.url.trim(), SUPABASE_CONFIG.publishableKey.trim(), {
       auth: {
-        persistSession: false,
-        autoRefreshToken: false,
-        detectSessionInUrl: false
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true
       }
     });
 
