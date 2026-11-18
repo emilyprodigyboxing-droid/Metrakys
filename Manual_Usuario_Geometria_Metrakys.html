@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manual de usuario | Geometría de máquinas · Metrakys</title>
+<style>
+:root{--blue:#30699d;--blue2:#173b65;--orange:#ed762d;--red:#c62937;--ink:#182230;--muted:#596579;--bg:#f3f6f9;--line:#dce3eb;--soft:#eaf1f8;--green:#087443;--amber:#8a4b00}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 Arial,sans-serif}
+.wrap{max-width:1240px;margin:auto;padding:24px}
+header{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px 28px;margin-bottom:18px;box-shadow:0 5px 20px #1522380a}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:4px solid transparent;border-image:linear-gradient(90deg,var(--blue) 0 48%,var(--orange) 48% 72%,var(--red) 72%) 1;padding-bottom:18px}
+.kicker{margin:0;color:var(--orange);font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+h1{color:var(--blue);font-size:clamp(26px,4vw,38px);line-height:1.15;margin:5px 0}
+.subtitle{margin:0;color:var(--muted)}
+.logo-mark{width:58px;height:58px;border-radius:14px;background:linear-gradient(145deg,var(--blue),var(--blue2));display:grid;place-items:center;color:#fff;font-weight:900;font-size:18px;letter-spacing:-1px;flex:none}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}.chip{background:var(--soft);color:var(--blue2);padding:5px 10px;border-radius:99px;font-size:12px;font-weight:700}
+.layout{display:grid;grid-template-columns:265px minmax(0,1fr);gap:18px;align-items:start}
+nav{position:sticky;top:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;max-height:calc(100vh - 28px);overflow:auto}
+nav strong{display:block;color:var(--blue);margin:0 0 10px}
+nav a{display:block;text-decoration:none;color:#344054;padding:7px 9px;border-radius:7px;font-size:13px}
+nav a:hover,nav a.active{background:var(--soft);color:var(--blue2);font-weight:700}
+main{min-width:0}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:16px;box-shadow:0 2px 9px #15223808;scroll-margin-top:18px}
+h2{font-size:22px;color:var(--blue);margin:0 0 12px}
+h3{font-size:17px;color:var(--blue2);margin:22px 0 8px}
+h4{margin:0 0 6px;color:var(--blue2)}
+p{margin:8px 0}ul,ol{padding-left:22px}li{margin:5px 0}
+.lead{font-size:16px;color:#344054}
+.note{padding:12px 14px;border-left:4px solid var(--blue);background:#eef5fb;border-radius:8px;margin:13px 0;color:#29445f}
+.warning{border-left-color:var(--orange);background:#fff6ed;color:#68401d}
+.good{border-left-color:var(--green);background:#edf8f1;color:#155b39}
+.danger{border-left-color:var(--red);background:#fff0f1;color:#7e2029}
+.steps{counter-reset:step;display:grid;gap:10px;margin:14px 0}
+.step{display:grid;grid-template-columns:38px 1fr;gap:12px;padding:13px;border:1px solid var(--line);border-radius:10px;background:#fcfdff}
+.step:before{counter-increment:step;content:counter(step);width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--blue);color:#fff;font-weight:800}
+.step p{margin:3px 0 0;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.mini{border:1px solid var(--line);border-radius:10px;padding:14px;background:#fbfcfe}
+.mini p{font-size:13px;color:var(--muted);margin-bottom:0}
+.tag{display:inline-block;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:800;background:#e9eef5;color:#344054}
+.tag.green{background:#e4f5eb;color:var(--green)}.tag.amber{background:#fff0d9;color:var(--amber)}
+.mock{border:1px solid #cbd5e1;border-radius:12px;background:#f8fafc;padding:14px;margin:12px 0}
+.mock-title{display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--blue2);font-weight:800;border-bottom:1px solid var(--line);padding-bottom:9px;margin-bottom:10px}
+.mock-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.field{background:#fff;border:1px solid var(--line);border-radius:7px;padding:8px;font-size:12px;color:var(--muted)}
+.field b{display:block;color:var(--ink);font-size:12px;margin-bottom:3px}
+.btn{display:inline-block;background:#1457a6;color:#fff;padding:7px 11px;border-radius:7px;font-size:12px;font-weight:700;margin:4px 4px 0 0}
+.btn.alt{background:#e8eef6;color:#173b65}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top}
+th{background:#f2f5f8;color:var(--blue2)}
+details{border:1px solid var(--line);border-radius:9px;margin:9px 0;padding:11px 13px;background:#fcfdff}
+summary{cursor:pointer;font-weight:700;color:var(--blue2)}
+code{font-family:Consolas,monospace;background:#eef2f6;padding:2px 5px;border-radius:4px}
+.search{width:100%;padding:11px;border:1px solid #cbd3dd;border-radius:8px;margin:8px 0 15px;font:inherit}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:16px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+button{border:0;background:var(--blue2);color:#fff;padding:9px 13px;border-radius:8px;font-weight:700;cursor:pointer}
+button.secondary{background:#e8eef6;color:#173b65}
+@media(max-width:850px){.layout{grid-template-columns:1fr}nav{position:relative;top:auto;max-height:none}.grid{grid-template-columns:1fr}.mock-grid{grid-template-columns:1fr 1fr}.wrap{padding:12px}}
+@media print{body{background:#fff}.wrap{max-width:none;padding:0}nav,.actions,.search{display:none!important}.layout{display:block}header,.card{box-shadow:none;break-inside:avoid;border-color:#bbb}a{color:inherit}details{break-inside:avoid}footer{display:none}}
+:root{color-scheme:light;--surface:#fff;--surface-alt:#fbfcfe;--input:#fff;--nav-text:#344054;--note-bg:#eef5fb;--note-text:#29445f;--warning-bg:#fff6ed;--warning-text:#68401d;--good-bg:#edf8f1;--good-text:#155b39;--danger-bg:#fff0f1;--danger-text:#7e2029;--tag-bg:#e9eef5;--tag-text:#344054}
+:root[data-theme="dark"]{color-scheme:dark;--blue:#41d7f4;--blue2:#b8d8ec;--orange:#f3a64a;--red:#f47772;--ink:#edf5fb;--muted:#a9bdcd;--bg:#07111e;--line:#29445d;--soft:#15334a;--green:#57d2a0;--amber:#f3c477;--surface:#0d1b2b;--surface-alt:#112338;--input:#091725;--nav-text:#c6d6e2;--note-bg:#112c40;--note-text:#d4e8f4;--warning-bg:#352719;--warning-text:#f9dfbc;--good-bg:#10342c;--good-text:#c2f0da;--danger-bg:#3a2028;--danger-text:#ffd4d6;--tag-bg:#213649;--tag-text:#d5e5f1}
+body{background:radial-gradient(ellipse at 85% 2%,#36a8ce18,transparent 36%),var(--bg);color:var(--ink)}header,nav,.card{background:var(--surface);border-color:var(--line)}.step,.mini,details,.mock{background:var(--surface-alt);border-color:var(--line)}.field,.search{background:var(--input);border-color:var(--line);color:var(--ink)}.lead,nav a{color:var(--nav-text)}.note{background:var(--note-bg);color:var(--note-text)}.warning{background:var(--warning-bg);color:var(--warning-text)}.good{background:var(--good-bg);color:var(--good-text)}.danger{background:var(--danger-bg);color:var(--danger-text)}.tag{background:var(--tag-bg);color:var(--tag-text)}.tag.green{background:var(--good-bg)}.tag.amber{background:var(--warning-bg)}th,code{background:var(--soft)}.btn.alt,button.secondary{background:var(--soft);color:var(--blue2)}.chip{color:var(--blue2)}
+.brand-logo{width:148px;height:55px;object-fit:contain;object-position:center}.header-controls{display:flex;gap:8px;align-items:center;justify-content:flex-end;flex-wrap:wrap;margin-top:16px}.header-controls select{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--input);color:var(--ink)}.header-controls button{border:1px solid var(--line);background:var(--surface-alt);color:var(--ink)}button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--orange);outline-offset:3px}.manual-progress{height:5px;margin-top:16px;background:var(--soft);border-radius:9px;overflow:hidden}.manual-progress span{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--blue),var(--orange))}
+.nav-empty{font-size:12px;color:var(--muted);margin:8px 0}.section-heading{display:flex;align-items:start;gap:10px;justify-content:space-between}.section-heading h2{flex:1}.section-toggle{flex:none;padding:5px 10px;border:1px solid var(--line);background:var(--surface-alt);color:var(--blue2);font-size:12px}.card[hidden],.nav-empty[hidden],nav a[hidden]{display:none!important}.section-content[hidden]{display:none}.section-content{min-width:0;overflow-x:auto}.section-controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.section-controls button{border:1px solid var(--line);background:var(--surface);color:var(--blue2);font-size:12px}button{background:#176c9a;color:#fff}:root[data-theme="dark"] .step:before{color:#06111b}
+@media(max-width:600px){.brand{align-items:flex-start}.brand-logo{width:100px;height:44px}.header-controls{justify-content:flex-start}.section-heading h2{font-size:19px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+@media print{.header-controls,.manual-progress,.section-controls,.section-toggle{display:none!important}.card[hidden],.section-content[hidden]{display:block!important}:root[data-theme="dark"]{--bg:#fff;--surface:#fff;--surface-alt:#fff;--input:#fff;--ink:#111;--muted:#444;--blue:#173b65;--blue2:#173b65;--line:#bbb;--soft:#eee;--nav-text:#111;--note-bg:#fff;--note-text:#111;--warning-bg:#fff;--warning-text:#111;--good-bg:#fff;--good-text:#111;--danger-bg:#fff;--danger-text:#111}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+ <div class="brand">
+  <div><p class="kicker">Documentación interna · Metrakys Metrology</p><h1>Manual de usuario</h1><p class="subtitle">Software de geometría de máquinas</p></div>
+  <img class="brand-logo" src="./Logo Metrakys Metrology Services SIN FONDO.png" alt="Metrakys Metrology">
+ </div>
+ <div class="meta"><span class="chip">Uso interno</span><span class="chip">Guía operativa</span><span class="chip">Versión basada en V8 Geral</span><span class="chip">ES · EN · PT en la aplicación</span></div>
+ <div class="header-controls"><label for="manualLanguage" id="languageLabel">Idioma</label><select id="manualLanguage"><option value="es">ES · Español</option><option value="en">EN · English</option><option value="pt">PT · Português</option></select><button type="button" id="themeToggle">Tema oscuro</button></div>
+ <p id="preferenceStatus" class="tiny" role="status" hidden></p>
+ <div class="manual-progress" role="progressbar" aria-label="Progreso de lectura" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
+</header>
+<div class="layout">
+<nav>
+ <strong>Contenido</strong>
+ <input class="search" id="navSearch" placeholder="Buscar en el manual…" aria-label="Buscar secciones">
+ <p class="nav-empty" id="navEmpty" hidden></p>
+ <a href="#objetivo">1. Objetivo y alcance</a>
+ <a href="#flujo">2. Flujo general de trabajo</a>
+ <a href="#quickreport">3. Importar Quick Report</a>
+ <a href="#proyecto">4. Datos del proyecto</a>
+ <a href="#evaluaciones">5. Configurar evaluaciones</a>
+ <a href="#retitude">6. Evaluación de retitude</a>
+ <a href="#resultados">7. Resultados y filtros</a>
+ <a href="#compensacion">8. Tabla de compensación</a>
+ <a href="#esquadraje">9. Esquadraje</a>
+ <a href="#complementarias">10. Análisis complementarios</a>
+ <a href="#informe">11. Preparar e imprimir informe</a>
+ <a href="#exportaciones">12. Exportaciones y copias</a>
+ <a href="#buenas-practicas">13. Buenas prácticas</a>
+ <a href="#limitaciones">14. Alcance y limitaciones</a>
+ <a href="#glosario">15. Glosario</a>
+</nav>
+<main>
+<div class="section-controls"><button type="button" id="expandSections">Expandir secciones</button><button type="button" id="collapseSections">Contraer secciones</button></div>
+<section class="card" id="objetivo">
+<h2>1. Objetivo y alcance</h2>
+<p class="lead">Este manual explica cómo utilizar el software interno de Geometría de máquinas de Metrakys Metrology para importar datos de medición, configurar evaluaciones, revisar resultados, generar tablas de compensación y preparar informes.</p>
+<p>La herramienta trabaja a partir de datos copiados en formato <b>Quick Report</b> desde el software metrológico. El usuario define las evaluaciones y los parámetros de análisis; la aplicación procesa los datos y presenta resultados, gráficos y tablas.</p>
+<div class="note warning"><b>Importante:</b> el software es una herramienta de cálculo y presentación. No sustituye la preparación del ensayo, la alineación ni las decisiones técnicas que deben realizarse en el software metrológico y conforme al procedimiento aplicable.</div>
+<p>La interfaz incluye selector de idioma (español, inglés y portugués). Los nombres de algunos controles pueden variar según el idioma seleccionado; este manual utiliza principalmente los nombres visibles en español o los términos técnicos que aparecen en la aplicación.</p>
+</section>
+
+<section class="card" id="flujo">
+<h2>2. Flujo general de trabajo</h2>
+<div class="steps">
+ <div class="step"><div><b>Preparar los Quick Reports</b><p>Realizar y revisar las mediciones en el software metrológico. Copiar el Quick Report correspondiente a cada ensayo.</p></div></div>
+ <div class="step"><div><b>Introducir los datos del proyecto</b><p>Identificar proyecto, máquina, número de serie, fecha, operador y equipo utilizado.</p></div></div>
+ <div class="step"><div><b>Crear y configurar las evaluaciones</b><p>Añadir una tarjeta por cada combinación de ensayo, eje y conjunto de datos que se desea analizar.</p></div></div>
+ <div class="step"><div><b>Calcular y revisar</b><p>Ejecutar las evaluaciones y revisar estados, valores, gráficos, tablas y posibles avisos.</p></div></div>
+ <div class="step"><div><b>Generar complementos</b><p>Cuando proceda, crear tablas de compensación, evaluaciones de ESQUADRAJE y análisis complementarios.</p></div></div>
+ <div class="step"><div><b>Preparar el informe</b><p>Seleccionar las secciones que deben incluirse y utilizar la función de impresión del navegador para imprimir o guardar en PDF.</p></div></div>
+</div>
+<div class="note good">Recomendación: trabajar de forma ordenada y calcular las evaluaciones antes de generar compensaciones o preparar el informe final.</div>
+</section>
+
+<section class="card" id="quickreport">
+<h2>3. Importar Quick Report</h2>
+<p>Cada tarjeta de evaluación dispone de un área de texto independiente para su Quick Report. Los datos pegados en una tarjeta se utilizan únicamente en esa evaluación.</p>
+<div class="steps">
+ <div class="step"><div><b>Copiar el Quick Report</b><p>Desde el software metrológico, copiar el bloque de puntos que se desea evaluar, incluyendo los encabezados de grupo, nombre de punto y coordenadas.</p></div></div>
+ <div class="step"><div><b>Pegar en la tarjeta correcta</b><p>Pegar el contenido en el campo «Quick Report de este ensayo» de la evaluación correspondiente. No mezclar ensayos distintos en una misma tarjeta.</p></div></div>
+ <div class="step"><div><b>Leer el Quick Report</b><p>Hacer clic en «Leer Quick Report de esta tarjeta». La aplicación interpreta los grupos y las columnas reconocidas.</p></div></div>
+ <div class="step"><div><b>Seleccionar el grupo</b><p>Si el bloque contiene varios grupos compatibles, seleccionar el grupo que corresponde al ensayo. La evaluación utiliza un único grupo por tarjeta.</p></div></div>
+</div>
+<div class="mock">
+ <div class="mock-title"><span>Tarjeta de evaluación · Ejemplo visual</span><span class="tag">Quick Report</span></div>
+ <div class="field"><b>Quick Report de este ensayo</b>Point Group · Nombre del grupo<br>Point Name · X · Y · Z<br>(mm) · (mm) · (mm)<br>POSXCC0 · 0 · 0 · 0</div>
+ <span class="btn">Leer Quick Report de esta tarjeta</span>
+</div>
+<div class="note warning"><b>Comprobación:</b> después de leer los datos, revisar el mensaje de estado de la tarjeta y confirmar que el grupo seleccionado contiene los puntos y las coordenadas esperadas. Si el grupo no es compatible con el eje elegido, la evaluación no podrá calcularse correctamente.</div>
+<p>La aplicación reconoce grupos lineales con coordenadas como X, Y, Z, V1 o V2 y grupos angulares que incluyen R y Theta, según la estructura del Quick Report.</p>
+</section>
+
+<section class="card" id="proyecto">
+<h2>4. Datos del proyecto y de la máquina</h2>
+<p>Antes de calcular, completar los campos generales del proyecto:</p>
+<table><thead><tr><th>Campo</th><th>Uso</th></tr></thead><tbody>
+<tr><td><b>Proyecto / PI</b></td><td>Identificación del proyecto o referencia interna.</td></tr>
+<tr><td><b>Máquina</b></td><td>Identificación de la máquina evaluada.</td></tr>
+<tr><td><b>N.º de serie</b></td><td>Número de serie de la máquina.</td></tr>
+<tr><td><b>Fecha</b></td><td>Fecha asociada al ensayo o al informe.</td></tr>
+<tr><td><b>Operador</b></td><td>Seleccionar el operador responsable entre las opciones disponibles.</td></tr>
+<tr><td><b>Equipo utilizado en el ensayo</b></td><td>Seleccionar Laser Tracker Leica o Laser Tracker FARO, según corresponda.</td></tr>
+</tbody></table>
+<div class="note">Estos datos generales se utilizan para identificar el proyecto en los resultados y en el informe cuando se incluye la sección de datos del proyecto.</div>
+</section>
+
+<section class="card" id="evaluaciones">
+<h2>5. Configurar evaluaciones</h2>
+<p>En la sección «Configuración», añadir una tarjeta por cada evaluación que se quiera realizar. La aplicación inicia con tarjetas de evaluación disponibles y permite añadir, duplicar o eliminar tarjetas.</p>
+<div class="mock">
+ <div class="mock-title"><span>Configuración de una evaluación</span><span class="tag">Ejemplo de campos</span></div>
+ <div class="mock-grid">
+  <div class="field"><b>Tipo de ensayo</b>Posicionamiento / Repetitividad / Retitude</div>
+  <div class="field"><b>Eje</b>X · Y · Z · V1 · V2 · A · B · C</div>
+  <div class="field"><b>Estado / compensación</b>SC · CC · CC2 · CC3</div>
+  <div class="field"><b>Modo de medición</b>Bidireccional / Unidireccional</div>
+  <div class="field"><b>Punto inicial / final</b>Valores nominales del recorrido</div>
+  <div class="field"><b>Intervalo</b>Separación nominal entre puntos</div>
+  <div class="field"><b>N.º de ciclos</b>Número de ciclos del ensayo</div>
+  <div class="field"><b>Tolerancia</b>Valor y unidad aplicables</div>
+  <div class="field"><b>Quick Report</b>Datos del ensayo importados</div>
+ </div>
+</div>
+<h3>5.1 Tipo de ensayo</h3>
+<ul>
+<li><b>Posicionamiento:</b> seleccionar para evaluar los datos de posicionamiento del eje.</li>
+<li><b>Repetitividad:</b> seleccionar para evaluar la repetitividad conforme a los recorridos y ciclos definidos.</li>
+<li><b>Retitude:</b> seleccionar para evaluar la retitude. Esta opción no está disponible para los ejes angulares.</li>
+</ul>
+<h3>5.2 Eje y tipo de datos</h3>
+<p>Seleccionar el eje que corresponde al ensayo: X, Y, Z, V1, V2, A, B o C. La selección del eje determina qué tipo de grupo y qué columnas de datos se esperan.</p>
+<p>Para V1 y V2 aparece un campo adicional para definir la coordenada medida. Puede utilizarse la detección automática o seleccionarse X, Y o Z cuando sea necesario identificar explícitamente la coordenada.</p>
+<p>Para determinados ensayos angulares aparece la configuración específica de columna angular, unidad angular y factor de importación. Estos campos solo deben modificarse conociendo el formato y las unidades de origen del Quick Report.</p>
+<h3>5.3 Parámetros nominales</h3>
+<table><thead><tr><th>Parámetro</th><th>Orientación de uso</th></tr></thead><tbody>
+<tr><td><b>Punto inicial</b></td><td>Primera posición nominal del recorrido. En evaluaciones angulares, el campo se interpreta en la unidad angular configurada.</td></tr>
+<tr><td><b>Punto final</b></td><td>Última posición nominal del recorrido.</td></tr>
+<tr><td><b>Intervalo</b></td><td>Separación nominal entre posiciones. Debe ser mayor que cero.</td></tr>
+<tr><td><b>N.º de ciclos</b></td><td>Número entero de ciclos, igual o superior a uno.</td></tr>
+<tr><td><b>Modo de medición</b></td><td>Indicar si el ensayo se ha realizado en modo bidireccional o unidireccional.</td></tr>
+</tbody></table>
+<h3>5.4 Estado / compensación</h3>
+<p>Seleccionar la opción que identifica el estado de compensación aplicable al ensayo: SC, CC, CC2 o CC3. La selección debe corresponder a las condiciones reales de medición y al procedimiento utilizado.</p>
+<h3>5.5 Tolerancia</h3>
+<p>Definir el valor de tolerancia y seleccionar una unidad compatible con la magnitud evaluada. Para ejes lineales se ofrecen unidades lineales; para ejes angulares se ofrecen unidades angulares. No se realiza una conversión entre longitud y ángulo.</p>
+<p>En evaluaciones lineales se puede seleccionar la aplicación de tolerancia:</p>
+<ul>
+<li><b>Fija:</b> mantiene la regla fija configurada.</li>
+<li><b>Proporcional a la distancia desde el origen:</b> la tolerancia varía con la distancia total desde el origen.</li>
+<li><b>Proporcional por intervalo:</b> aplica la proporción a cada intervalo de medición, sin acumular los intervalos anteriores.</li>
+</ul>
+<p>Cuando se elige una aplicación proporcional, completar también el largo de referencia y su unidad.</p>
+<h3>5.6 Duplicar o eliminar una evaluación</h3>
+<p>El botón «Duplicar» crea otra tarjeta copiando la configuración y el texto del Quick Report de la tarjeta de origen. Revisar todos los campos y el conjunto de datos antes de calcular. «Remover» elimina la tarjeta correspondiente.</p>
+<div class="note warning">No asumir que los valores iniciales de una tarjeta son los valores correctos para cualquier máquina o ensayo. Confirmar siempre eje, recorrido, intervalo, ciclos, tolerancia, unidades y datos importados.</div>
+<h3>5.7 Calcular evaluaciones</h3>
+<p>Cuando las tarjetas estén configuradas, pulsar «Calcular evaluaciones». La aplicación valida los datos y muestra los resultados disponibles. Si una tarjeta presenta un error, leer el mensaje de esa tarjeta, corregir la configuración o el Quick Report y volver a calcular.</p>
+</section>
+
+<section class="card" id="retitude">
+<h2>6. Evaluación de retitude</h2>
+<p>Al seleccionar el tipo de ensayo «Retitude» en un eje lineal, aparecen campos específicos para configurar las dos componentes de retitude, el conjunto o línea y el tipo de coordenadas.</p>
+<ul>
+<li><b>Retitude 1 y Retitude 2:</b> seleccionar dos componentes distintas, disponibles según el eje.</li>
+<li><b>Conjunto / línea:</b> identificar la línea o conjunto correspondiente.</li>
+<li><b>Tipo de coordenadas:</b> indicar si las coordenadas ya están creadas o si todavía no existe el sistema de coordenadas requerido.</li>
+</ul>
+<p>Cuando se selecciona «Sin coordenadas creadas», el software puede presentar un diálogo de diagnóstico para revisar la creación automática del sistema local. El diálogo muestra una comparación de las coordenadas originales y las coordenadas locales propuestas.</p>
+<div class="note warning"><b>Confirmación necesaria:</b> revisar el diagnóstico antes de confirmar la transformación. La aplicación indica si la evaluación utiliza coordenadas originales del Quick Report o coordenadas transformadas automáticamente. No confirmar una transformación sin comprobar que corresponde a la configuración geométrica del ensayo.</div>
+<p>Si hay datos disponibles para revisión, el botón «Revisar coordenadas» permite abrir la revisión de coordenadas de retitude.</p>
+</section>
+
+<section class="card" id="resultados">
+<h2>7. Resultados y filtros</h2>
+<p>Después de calcular correctamente, aparece la sección «Resultados», con un resumen del proyecto, indicadores generales, gráficos y tablas detalladas.</p>
+<h3>7.1 Estado de evaluación</h3>
+<p>Los resultados pueden mostrar los estados <span class="tag green">PASS</span> y <span class="tag amber">FAIL</span>. Interpretar el estado junto con la tolerancia configurada y los valores presentados; no modificar la tolerancia solo para obtener un estado favorable.</p>
+<h3>7.2 Filtrar resultados</h3>
+<table><thead><tr><th>Filtro</th><th>Función</th></tr></thead><tbody>
+<tr><td><b>Filtrar evaluación</b></td><td>Mostrar una evaluación concreta o todas.</td></tr>
+<tr><td><b>Filtrar estado</b></td><td>Mostrar todos los estados, solo PASS o solo FAIL.</td></tr>
+<tr><td><b>Filtrar punto / posición</b></td><td>Buscar por valor de posición o por nombre de punto, por ejemplo <code>500</code> o <code>POSXCC10</code>.</td></tr>
+</tbody></table>
+<p>Las tablas permiten ordenar determinadas columnas haciendo clic en su encabezado y expandir o minimizar la visualización de todos los puntos.</p>
+<h3>7.3 Exportar resultados</h3>
+<ul>
+<li><b>Exportar resultados filtrados CSV:</b> descarga un archivo CSV con los datos de las evaluaciones y filas de resultados incluidas en la exportación. El archivo puede abrirse en una hoja de cálculo.</li>
+<li><b>Copiar líneas Renishaw filtradas:</b> copia las líneas Renishaw disponibles para utilizarlas en el flujo de trabajo correspondiente.</li>
+</ul>
+<div class="note">Antes de exportar, comprobar qué evaluación, estado o posición está seleccionada en los filtros. Para preparar un informe completo, se puede elegir la opción de impresión que ignora los filtros.</div>
+</section>
+
+<section class="card" id="compensacion">
+<h2>8. Tabla de compensación</h2>
+<p>La sección «Tabla de compensación» genera tablas a partir de los resultados de las evaluaciones calculadas. Por ello, es necesario calcular primero las evaluaciones.</p>
+<div class="steps">
+ <div class="step"><div><b>Seleccionar evaluación / eje</b><p>Elegir una evaluación válida de la lista. La lista se alimenta de las evaluaciones calculadas correctamente.</p></div></div>
+ <div class="step"><div><b>Elegir tipo de tabla</b><p>Seleccionar «Combinada» o «Separada», cuando las opciones estén disponibles para el tipo de evaluación.</p></div></div>
+ <div class="step"><div><b>Seleccionar controlador</b><p>Elegir SIEMENS o FANUC. Algunas configuraciones fuerzan FANUC automáticamente según el eje o la evaluación.</p></div></div>
+ <div class="step"><div><b>Definir resolución</b><p>Para las tablas lineales, seleccionar la resolución disponible: 0.001 mm o 0.0001 mm. En determinados modos angulares la resolución se define automáticamente y el campo puede ocultarse.</p></div></div>
+ <div class="step"><div><b>Generar y revisar</b><p>Pulsar «Generar tabla de compensación» y revisar el mensaje, el eje, el controlador, el tipo de tabla y todos los valores producidos.</p></div></div>
+</div>
+<h3>8.1 Combinada y separada</h3>
+<ul><li><b>Combinada:</b> genera una tabla combinada según el método definido para el controlador y la evaluación.</li><li><b>Separada:</b> genera tablas direccionales cuando el método seleccionado lo admite.</li></ul>
+<h3>8.2 Convención y controlador</h3>
+<p>La información de la aplicación distingue la convención del controlador. Para SIEMENS, la indicación general es «Absolute · As errors»; para FANUC, «Incremental · As compensations». Los modos angulares específicos presentan sus propias indicaciones.</p>
+<h3>8.3 Selección para el informe y exportación</h3>
+<p>Las tablas generadas se pueden seleccionar o desmarcar en «Tablas para incluir en el informe». También existen opciones para copiar la tabla y exportarla a CSV. Si se desea imprimir una tabla, generarla antes y marcarla para incluirla en el informe.</p>
+<div class="note warning">No todas las combinaciones de eje, tipo de evaluación, controlador y sentido de medición son compatibles. La aplicación puede bloquear una combinación o mostrar un mensaje cuando falten recorridos, posiciones coincidentes o puntos de referencia requeridos. No ignorar esos mensajes ni completar los datos con valores inventados.</div>
+</section>
+
+<section class="card" id="esquadraje">
+<h2>9. ESQUADRAJE</h2>
+<p>La sección «ESQUADRAJE» evalúa la desviación del segundo eje de la combinación seleccionada con respecto al primer punto importado.</p>
+<div class="steps">
+ <div class="step"><div><b>Añadir ESQUADRAJE</b><p>Pulsar «Añadir ESQUADRAJE» para crear una tarjeta de análisis.</p></div></div>
+ <div class="step"><div><b>Importar el Quick Report</b><p>Pegar el Quick Report del ensayo y pulsar «Leer Quick Report».</p></div></div>
+ <div class="step"><div><b>Seleccionar el tipo</b><p>Elegir una de las combinaciones disponibles: ZX, ZY, YX, XY, XZ o YZ.</p></div></div>
+ <div class="step"><div><b>Configurar tolerancia si aplica</b><p>La tolerancia es opcional. Si se utiliza, seleccionar su unidad y el modo de aplicación.</p></div></div>
+ <div class="step"><div><b>Calcular</b><p>Pulsar «Calcular ESQUADRAJE» y revisar el estado, el resumen y la tabla de puntos y desviaciones.</p></div></div>
+</div>
+<h3>9.1 Aplicación de tolerancia</h3>
+<ul><li><b>Fija:</b> utiliza la tolerancia definida como valor fijo.</li><li><b>Proporcional a la distancia desde el origen:</b> la tolerancia aumenta según la distancia total respecto al origen y requiere longitud de referencia.</li><li><b>Proporcional por intervalo:</b> aplica la proporción a cada paso de medición, sin acumular los pasos anteriores; requiere longitud de referencia.</li></ul>
+<div class="note warning"><b>Condición previa:</b> el Quick Report debe estar alineado y el Best Fit debe estar concluido en el software metrológico. Esta herramienta no alinea, no reconstruye la geometría y no modifica las coordenadas originales.</div>
+</section>
+
+<section class="card" id="complementarias">
+<h2>10. Análisis complementarios</h2>
+<p>Esta sección permite documentar resultados procedentes de otros programas metrológicos. Los datos se incorporan al informe sin que la herramienta vuelva a calcular o transforme los resultados externos.</p>
+<h3>10.1 Crear un análisis</h3>
+<ol><li>Pulsar «Añadir análisis».</li><li>Introducir un título descriptivo.</li><li>Añadir imágenes cuando sea necesario y completar sus leyendas.</li><li>Configurar las verificaciones básicas o el análisis de tolerancia, si procede.</li><li>Incluir Quick Reports de origen y datos complementarios que deban documentarse.</li></ol>
+<h3>10.2 Verificaciones básicas</h3>
+<p>Se pueden activar «Punto máximo» y «Punto mínimo», elegir el Quick Report de origen y seleccionar la columna o parámetro que se desea consultar. La unidad puede indicarse cuando sea necesario.</p>
+<h3>10.3 Análisis de tolerancia</h3>
+<p>Activar el análisis y seleccionar el Quick Report de origen, la columna o parámetro, la unidad original de la columna, la unidad de tolerancia y el formato:</p>
+<ul><li><b>Bilateral simétrica (±)</b></li><li><b>Límite máximo y mínimo</b></li><li><b>Límite máximo permitido</b></li><li><b>Límite mínimo permitido</b></li></ul>
+<p>La aplicación contempla conversión entre milímetros y micrómetros (1 mm = 1000 µm). Los grados no se convierten en unidades lineales.</p>
+<h3>10.4 Almacenamiento local y backup</h3>
+<div class="note warning">Los análisis complementarios se guardan en el almacenamiento local del navegador. No se trata de un historial central compartido entre usuarios o equipos.</div>
+<p>Para transferirlos a otro dispositivo o conservar una copia, utilizar «Exportar backup JSON». Para recuperar una copia anterior, utilizar «Importar backup JSON» y seleccionar el archivo correspondiente.</p>
+<p>Las imágenes y los datos complementarios también forman parte de este almacenamiento local. Mantener copias de seguridad cuando sean importantes para el expediente.</p>
+</section>
+
+<section class="card" id="informe">
+<h2>11. Preparar e imprimir informe</h2>
+<p>La sección «Imprimir informe» permite seleccionar un formato predefinido o personalizar las secciones que se incluirán. La salida se prepara para impresión en formato A4 y puede guardarse como PDF desde el diálogo de impresión del navegador.</p>
+<h3>11.1 Formatos predefinidos</h3>
+<table><thead><tr><th>Formato</th><th>Contenido previsto</th></tr></thead><tbody>
+<tr><td><b>Informe completo</b></td><td>Datos del proyecto, resumen, gráficos, tablas de puntos, ESQUADRAJE, análisis complementarios y tablas de compensación disponibles.</td></tr>
+<tr><td><b>Resumen general de datos</b></td><td>Datos del proyecto y resumen general de resultados.</td></tr>
+<tr><td><b>Solamente gráficos</b></td><td>Datos del proyecto y gráficos con marcadores de puntos.</td></tr>
+<tr><td><b>Gráficos + tabla de puntos</b></td><td>Datos del proyecto, gráficos y tablas detalladas de puntos.</td></tr>
+<tr><td><b>Solamente tabla de compensación</b></td><td>Las tablas de compensación seleccionadas y generadas previamente.</td></tr>
+<tr><td><b>Solamente ESQUADRAJE</b></td><td>Datos del proyecto, resultados de ESQUADRAJE y tablas de puntos correspondientes.</td></tr>
+<tr><td><b>Personalizado</b></td><td>Permite marcar o desmarcar individualmente las secciones disponibles.</td></tr>
+</tbody></table>
+<h3>11.2 Secciones personalizables</h3>
+<ul><li>Datos del proyecto y máquina.</li><li>Resumen general de resultados.</li><li>Gráficos.</li><li>Tablas con todos los puntos.</li><li>Resultados de ESQUADRAJE.</li><li>Análisis complementarios.</li><li>Tabla(s) de compensación.</li></ul>
+<p>También existe una opción para imprimir todas las evaluaciones y puntos, ignorando los filtros aplicados en la tabla de resultados.</p>
+<h3>11.3 Observaciones y salida PDF</h3>
+<ol><li>Escribir las observaciones que deban aparecer en el informe.</li><li>Comprobar que se han generado las evaluaciones, compensaciones o ESQUADRAJE que se desean incluir.</li><li>Seleccionar «Imprimir selección».</li><li>En el diálogo del navegador, elegir una impresora o «Guardar como PDF».</li><li>Revisar el documento final antes de archivarlo o distribuirlo.</li></ol>
+<div class="note warning">Si se selecciona un formato que requiere resultados todavía no calculados, la aplicación mostrará un aviso. Para imprimir tablas de compensación, generarlas primero y seleccionar las tablas que deben incluirse.</div>
+</section>
+
+<section class="card" id="exportaciones">
+<h2>12. Exportaciones y copias</h2>
+<table><thead><tr><th>Función</th><th>Resultado</th><th>Cuándo utilizarla</th></tr></thead><tbody>
+<tr><td>Exportar resultados filtrados CSV</td><td>Archivo CSV con filas de resultados.</td><td>Para analizar o compartir datos tabulares.</td></tr>
+<tr><td>Copiar líneas Renishaw filtradas</td><td>Texto con líneas Renishaw disponibles.</td><td>Para reutilizar esas líneas en el flujo correspondiente.</td></tr>
+<tr><td>Copiar tabla de compensación</td><td>Contenido de la tabla al portapapeles.</td><td>Para transferir los valores a otra herramienta.</td></tr>
+<tr><td>Exportar tabla de compensación CSV</td><td>Archivo CSV de la tabla generada.</td><td>Para guardar o revisar la tabla en una hoja de cálculo.</td></tr>
+<tr><td>Exportar backup JSON</td><td>Archivo de respaldo de análisis complementarios.</td><td>Para conservar o transferir los datos complementarios locales.</td></tr>
+<tr><td>Imprimir selección</td><td>Documento impreso o PDF.</td><td>Para emitir el informe técnico.</td></tr>
+</tbody></table>
+</section>
+
+<section class="card" id="buenas-practicas">
+<h2>13. Buenas prácticas operativas</h2>
+<ul>
+<li>Comprobar que el Quick Report corresponde a la máquina, eje, ensayo y recorrido correctos.</li>
+<li>Utilizar una tarjeta independiente por evaluación y grupo de puntos.</li>
+<li>Revisar encabezados, nombres de puntos, coordenadas y unidades antes de calcular.</li>
+<li>Confirmar punto inicial, punto final, intervalo, ciclos y modo de medición frente al ensayo real.</li>
+<li>Comprobar la tolerancia y su unidad antes de interpretar PASS o FAIL.</li>
+<li>Leer todos los avisos y errores mostrados por la aplicación.</li>
+<li>Revisar los resultados y las tablas de compensación antes de exportarlos.</li>
+<li>Guardar los CSV, PDF y backups JSON en la ubicación documental definida por la empresa.</li>
+<li>Antes de cerrar o actualizar la página, exportar o imprimir los resultados que deban conservarse.</li>
+</ul>
+</section>
+
+<section class="card" id="limitaciones">
+<h2>14. Alcance y limitaciones conocidas</h2>
+<div class="note danger"><b>La aplicación no debe tratarse como almacenamiento permanente de todos los ensayos.</b> La versión analizada indica que el procesamiento de los datos se realiza en el navegador y que los datos no se envían a servidores.</div>
+<ul>
+<li>Los Quick Reports y las configuraciones principales se procesan en la sesión del navegador; la interfaz analizada no presenta una función general de guardado de proyectos o recuperación de sesiones.</li>
+<li>Los análisis complementarios sí cuentan con almacenamiento local en el navegador y funciones de exportación e importación de backup JSON.</li>
+<li>El backup JSON de análisis complementarios no equivale a una copia completa del proyecto ni incluye automáticamente todos los resultados y configuraciones de las demás secciones.</li>
+<li>Los datos locales pueden no estar disponibles al cambiar de navegador, perfil de usuario o equipo. También pueden perderse si se borran los datos del navegador.</li>
+<li>La herramienta no sustituye la alineación, Best Fit, adquisición de mediciones ni validación metrológica realizada en el software de origen.</li>
+</ul>
+<p>Para una futura versión con historial centralizado, recuperación de formularios y trazabilidad por usuario, sería necesario integrar el guardado de proyectos y resultados con una base de datos y definir permisos de acceso.</p>
+</section>
+
+<section class="card" id="glosario">
+<h2>15. Glosario</h2>
+<table><thead><tr><th>Término</th><th>Significado en este manual</th></tr></thead><tbody>
+<tr><td><b>Quick Report</b></td><td>Bloque de texto exportado desde el software metrológico con grupos, puntos y coordenadas.</td></tr>
+<tr><td><b>Grupo</b></td><td>Conjunto de puntos identificado dentro del Quick Report.</td></tr>
+<tr><td><b>Bidireccional</b></td><td>Modo de medición que contempla recorridos en ambos sentidos.</td></tr>
+<tr><td><b>Unidireccional</b></td><td>Modo de medición realizado en un único sentido.</td></tr>
+<tr><td><b>PASS / FAIL</b></td><td>Estados de evaluación presentados por la aplicación respecto a la tolerancia configurada.</td></tr>
+<tr><td><b>CSV</b></td><td>Formato de archivo tabular que puede abrirse con programas de hojas de cálculo.</td></tr>
+<tr><td><b>JSON</b></td><td>Formato estructurado utilizado para el backup de análisis complementarios.</td></tr>
+<tr><td><b>Best Fit</b></td><td>Ajuste/alineación realizado en el software metrológico antes del análisis de ESQUADRAJE.</td></tr>
+</tbody></table>
+</section>
+<div class="actions"><button onclick="window.print()">Imprimir / Guardar como PDF</button><button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">Volver al inicio</button></div>
+</main>
+</div>
+<footer>METRAKYS METROLOGY · Documento interno de apoyo al usuario · Consultar siempre el procedimiento técnico vigente.</footer>
+</div>
+<script>
+const localizedSections={
+objetivo:{
+pt:`<h2>1. Objetivo e âmbito</h2><p class="lead">Este manual explica como utilizar o software interno de geometria de máquinas da Metrakys Metrology para importar dados de medição, configurar avaliações, rever resultados, gerar tabelas de compensação e preparar relatórios.</p><p>A ferramenta utiliza dados copiados em formato <b>Quick Report</b> do software metrológico. O utilizador define as avaliações e os parâmetros de análise; a aplicação processa os dados e apresenta resultados, gráficos e tabelas.</p><div class="note warning"><b>Importante:</b> o software é uma ferramenta de cálculo e apresentação. Não substitui a preparação do ensaio, o alinhamento nem as decisões técnicas a realizar no software metrológico e conforme o procedimento aplicável.</div><p>A interface dispõe de seletor de idioma (espanhol, inglês e português). Os nomes de alguns controlos podem variar consoante o idioma selecionado; este manual também mantém termos técnicos apresentados na aplicação.</p>`,
+en:`<h2>1. Purpose and scope</h2><p class="lead">This manual explains how to use Metrakys Metrology's internal machine geometry software to import measurement data, configure evaluations, review results, generate compensation tables and prepare reports.</p><p>The tool uses data copied in <b>Quick Report</b> format from metrology software. The user defines evaluations and analysis parameters; the application processes the data and displays results, charts and tables.</p><div class="note warning"><b>Important:</b> the software is a calculation and presentation tool. It does not replace test preparation, alignment or technical decisions to be made in the metrology software and according to the applicable procedure.</div><p>The interface has a language selector (Spanish, English and Portuguese). Some control names may vary with the selected language; this manual also retains technical terms shown in the application.</p>`},
+flujo:{
+pt:`<h2>2. Fluxo geral de trabalho</h2><div class="steps"><div class="step"><div><b>Preparar os Quick Reports</b><p>Realize e reveja as medições no software metrológico. Copie o Quick Report correspondente a cada ensaio.</p></div></div><div class="step"><div><b>Introduzir os dados do projeto</b><p>Identifique o projeto, máquina, número de série, data, operador e equipamento utilizado.</p></div></div><div class="step"><div><b>Criar e configurar as avaliações</b><p>Adicione um cartão para cada combinação de ensaio, eixo e conjunto de dados a analisar.</p></div></div><div class="step"><div><b>Calcular e rever</b><p>Execute as avaliações e reveja estados, valores, gráficos, tabelas e eventuais avisos.</p></div></div><div class="step"><div><b>Gerar complementos</b><p>Quando aplicável, crie tabelas de compensação, avaliações de esquadrejamento e análises complementares.</p></div></div><div class="step"><div><b>Preparar o relatório</b><p>Selecione as secções a incluir e utilize a impressão do navegador para imprimir ou guardar em PDF.</p></div></div></div><div class="note good">Recomendação: trabalhe de forma ordenada e calcule as avaliações antes de gerar compensações ou preparar o relatório final.</div>`,
+en:`<h2>2. General workflow</h2><div class="steps"><div class="step"><div><b>Prepare the Quick Reports</b><p>Perform and review measurements in the metrology software. Copy the Quick Report for each test.</p></div></div><div class="step"><div><b>Enter project data</b><p>Identify the project, machine, serial number, date, operator and equipment used.</p></div></div><div class="step"><div><b>Create and configure evaluations</b><p>Add one card for each test, axis and data-set combination to be analyzed.</p></div></div><div class="step"><div><b>Calculate and review</b><p>Run evaluations and review statuses, values, charts, tables and any warnings.</p></div></div><div class="step"><div><b>Generate additional outputs</b><p>When applicable, create compensation tables, squareness evaluations and complementary analyses.</p></div></div><div class="step"><div><b>Prepare the report</b><p>Select the sections to include and use the browser's print function to print or save as PDF.</p></div></div></div><div class="note good">Recommendation: work systematically and calculate evaluations before generating compensation or preparing the final report.</div>`},
+quickreport:{
+pt:`<h2>3. Importar Quick Report</h2><p>Cada cartão de avaliação tem uma área de texto independente para o respetivo Quick Report. Os dados colados num cartão são utilizados apenas nessa avaliação.</p><div class="steps"><div class="step"><div><b>Copiar o Quick Report</b><p>No software metrológico, copie o bloco de pontos a avaliar, incluindo os cabeçalhos de grupo, nome do ponto e coordenadas.</p></div></div><div class="step"><div><b>Colar no cartão correto</b><p>Cole o conteúdo no campo «Quick Report deste ensaio» da avaliação correspondente. Não misture ensaios distintos no mesmo cartão.</p></div></div><div class="step"><div><b>Ler o Quick Report</b><p>Clique em «Ler Quick Report deste cartão». A aplicação interpreta os grupos e as colunas reconhecidas.</p></div></div><div class="step"><div><b>Selecionar o grupo</b><p>Se o bloco contiver vários grupos compatíveis, selecione o correspondente ao ensaio. A avaliação utiliza um único grupo por cartão.</p></div></div></div><div class="mock"><div class="mock-title"><span>Cartão de avaliação · Exemplo visual</span><span class="tag">Quick Report</span></div><div class="field"><b>Quick Report deste ensaio</b>Point Group · Nome do grupo<br>Point Name · X · Y · Z<br>(mm) · (mm) · (mm)<br>POSXCC0 · 0 · 0 · 0</div><span class="btn">Ler Quick Report deste cartão</span></div><div class="note warning"><b>Verificação:</b> após ler os dados, reveja o estado do cartão e confirme que o grupo selecionado contém os pontos e coordenadas esperados. Se o grupo não for compatível com o eixo escolhido, a avaliação não poderá ser calculada corretamente.</div><p>A aplicação reconhece grupos lineares com coordenadas X, Y, Z, V1 ou V2 e grupos angulares com R e Theta, consoante a estrutura do Quick Report.</p>`,
+en:`<h2>3. Import a Quick Report</h2><p>Each evaluation card has its own Quick Report text area. Data pasted into a card is used only for that evaluation.</p><div class="steps"><div class="step"><div><b>Copy the Quick Report</b><p>In the metrology software, copy the point block to be evaluated, including group headings, point names and coordinates.</p></div></div><div class="step"><div><b>Paste into the correct card</b><p>Paste the content into “Quick Report for this test” on the corresponding evaluation. Do not mix different tests in one card.</p></div></div><div class="step"><div><b>Read the Quick Report</b><p>Click “Read this card's Quick Report”. The application interprets recognized groups and columns.</p></div></div><div class="step"><div><b>Select the group</b><p>If the block contains multiple compatible groups, select the one corresponding to the test. Each evaluation uses one group per card.</p></div></div></div><div class="mock"><div class="mock-title"><span>Evaluation card · Visual example</span><span class="tag">Quick Report</span></div><div class="field"><b>Quick Report for this test</b>Point Group · Group name<br>Point Name · X · Y · Z<br>(mm) · (mm) · (mm)<br>POSXCC0 · 0 · 0 · 0</div><span class="btn">Read this card's Quick Report</span></div><div class="note warning"><b>Check:</b> after reading the data, review the card's status and confirm the selected group contains the expected points and coordinates. If it is incompatible with the selected axis, the evaluation cannot be calculated correctly.</div><p>The application recognizes linear groups with coordinates such as X, Y, Z, V1 or V2, and angular groups containing R and Theta, depending on the Quick Report structure.</p>`},
+proyecto:{
+pt:`<h2>4. Dados do projeto e da máquina</h2><p>Antes de calcular, preencha os campos gerais do projeto:</p><table><thead><tr><th>Campo</th><th>Utilização</th></tr></thead><tbody><tr><td><b>Projeto / PI</b></td><td>Identificação do projeto ou referência interna.</td></tr><tr><td><b>Máquina</b></td><td>Identificação da máquina avaliada.</td></tr><tr><td><b>N.º de série</b></td><td>Número de série da máquina.</td></tr><tr><td><b>Data</b></td><td>Data associada ao ensaio ou ao relatório.</td></tr><tr><td><b>Operador</b></td><td>Selecione o responsável entre as opções disponíveis.</td></tr><tr><td><b>Equipamento utilizado no ensaio</b></td><td>Selecione Laser Tracker Leica ou Laser Tracker FARO, conforme aplicável.</td></tr></tbody></table><div class="note">Estes dados gerais identificam o projeto nos resultados e no relatório quando a secção de dados do projeto é incluída.</div>`,
+en:`<h2>4. Project and machine data</h2><p>Before calculating, complete the general project fields:</p><table><thead><tr><th>Field</th><th>Use</th></tr></thead><tbody><tr><td><b>Project / PI</b></td><td>Project identification or internal reference.</td></tr><tr><td><b>Machine</b></td><td>Identification of the evaluated machine.</td></tr><tr><td><b>Serial number</b></td><td>Machine serial number.</td></tr><tr><td><b>Date</b></td><td>Date associated with the test or report.</td></tr><tr><td><b>Operator</b></td><td>Select the responsible operator from the available options.</td></tr><tr><td><b>Equipment used in the test</b></td><td>Select Laser Tracker Leica or Laser Tracker FARO, as applicable.</td></tr></tbody></table><div class="note">These general details identify the project in results and in the report when the project-data section is included.</div>`},
+evaluaciones:{
+pt:`<h2>5. Configurar avaliações</h2><p>Na secção «Configuração», adicione um cartão para cada avaliação a realizar. A aplicação inicia com cartões disponíveis e permite adicionar, duplicar ou remover cartões.</p><div class="mock"><div class="mock-title"><span>Configuração de uma avaliação</span><span class="tag">Exemplo de campos</span></div><div class="mock-grid"><div class="field"><b>Tipo de ensaio</b>Posicionamento / Repetibilidade / Retitude</div><div class="field"><b>Eixo</b>X · Y · Z · V1 · V2 · A · B · C</div><div class="field"><b>Estado / compensação</b>SC · CC · CC2 · CC3</div><div class="field"><b>Modo de medição</b>Bidirecional / Unidirecional</div><div class="field"><b>Ponto inicial / final</b>Valores nominais do curso</div><div class="field"><b>Intervalo</b>Separação nominal entre pontos</div><div class="field"><b>N.º de ciclos</b>Número de ciclos do ensaio</div><div class="field"><b>Tolerância</b>Valor e unidade aplicáveis</div><div class="field"><b>Quick Report</b>Dados importados do ensaio</div></div></div>
+<h3>5.1 Tipo de ensaio</h3><ul><li><b>Posicionamento:</b> avalia os dados de posicionamento do eixo.</li><li><b>Repetibilidade:</b> avalia a repetibilidade conforme os percursos e ciclos definidos.</li><li><b>Retitude:</b> avalia a retitude; esta opção não está disponível para eixos angulares.</li></ul>
+<h3>5.2 Eixo e tipo de dados</h3><p>Selecione o eixo correspondente ao ensaio: X, Y, Z, V1, V2, A, B ou C. O eixo determina o tipo de grupo e as colunas esperadas.</p><p>Para V1 e V2 surge um campo adicional para a coordenada medida. Utilize a deteção automática ou selecione X, Y ou Z quando for necessário identificar explicitamente a coordenada.</p><p>Em certos ensaios angulares surgem configurações de coluna angular, unidade angular e fator de importação. Altere-as apenas conhecendo o formato e as unidades de origem do Quick Report.</p>
+<h3>5.3 Parâmetros nominais</h3><table><thead><tr><th>Parâmetro</th><th>Orientação de utilização</th></tr></thead><tbody><tr><td><b>Ponto inicial</b></td><td>Primeira posição nominal do curso; em avaliações angulares usa-se a unidade angular configurada.</td></tr><tr><td><b>Ponto final</b></td><td>Última posição nominal do curso.</td></tr><tr><td><b>Intervalo</b></td><td>Separação nominal entre posições; deve ser superior a zero.</td></tr><tr><td><b>N.º de ciclos</b></td><td>Número inteiro de ciclos, igual ou superior a um.</td></tr><tr><td><b>Modo de medição</b></td><td>Indique se o ensaio foi bidirecional ou unidirecional.</td></tr></tbody></table>
+<h3>5.4 Estado / compensação</h3><p>Selecione SC, CC, CC2 ou CC3 conforme o estado de compensação e as condições reais do ensaio.</p><h3>5.5 Tolerância</h3><p>Defina o valor e uma unidade compatível com a grandeza avaliada. Os eixos lineares oferecem unidades lineares e os angulares oferecem unidades angulares. Não há conversão entre comprimento e ângulo.</p><p>Nas avaliações lineares pode selecionar:</p><ul><li><b>Fixa:</b> mantém a regra fixa configurada.</li><li><b>Proporcional à distância da origem:</b> varia com a distância total desde a origem.</li><li><b>Proporcional por intervalo:</b> aplica a proporção a cada intervalo, sem acumular os anteriores.</li></ul><p>Na aplicação proporcional, preencha também o comprimento de referência e a respetiva unidade.</p>
+<h3>5.6 Duplicar ou remover uma avaliação</h3><p>«Duplicar» cria outro cartão copiando a configuração e o texto do Quick Report original. Reveja todos os campos e os dados antes de calcular. «Remover» elimina o cartão correspondente.</p><div class="note warning">Não presuma que os valores iniciais são adequados a qualquer máquina ou ensaio. Confirme sempre eixo, curso, intervalo, ciclos, tolerância, unidades e dados importados.</div><h3>5.7 Calcular avaliações</h3><p>Após configurar os cartões, clique em «Calcular avaliações». A aplicação valida os dados e mostra os resultados disponíveis. Em caso de erro, leia a mensagem do cartão, corrija a configuração ou o Quick Report e volte a calcular.</p>`,
+en:`<h2>5. Configure evaluations</h2><p>In “Configuration”, add one card for each evaluation. The application starts with evaluation cards and allows cards to be added, duplicated or removed.</p><div class="mock"><div class="mock-title"><span>Evaluation configuration</span><span class="tag">Example fields</span></div><div class="mock-grid"><div class="field"><b>Test type</b>Positioning / Repeatability / Straightness</div><div class="field"><b>Axis</b>X · Y · Z · V1 · V2 · A · B · C</div><div class="field"><b>Status / compensation</b>SC · CC · CC2 · CC3</div><div class="field"><b>Measurement mode</b>Bidirectional / Unidirectional</div><div class="field"><b>Start / end point</b>Nominal travel values</div><div class="field"><b>Interval</b>Nominal point spacing</div><div class="field"><b>Number of cycles</b>Test cycle count</div><div class="field"><b>Tolerance</b>Applicable value and unit</div><div class="field"><b>Quick Report</b>Imported test data</div></div></div>
+<h3>5.1 Test type</h3><ul><li><b>Positioning:</b> evaluates axis positioning data.</li><li><b>Repeatability:</b> evaluates repeatability according to the defined traverses and cycles.</li><li><b>Straightness:</b> evaluates straightness; this option is not available for angular axes.</li></ul>
+<h3>5.2 Axis and data type</h3><p>Select the test axis: X, Y, Z, V1, V2, A, B or C. The axis determines the expected group type and data columns.</p><p>For V1 and V2 an additional field specifies the measured coordinate. Use automatic detection or select X, Y or Z when an explicit coordinate is required.</p><p>Certain angular tests provide angular-column, angular-unit and import-factor settings. Change these only when the Quick Report's source format and units are known.</p>
+<h3>5.3 Nominal parameters</h3><table><thead><tr><th>Parameter</th><th>Usage guidance</th></tr></thead><tbody><tr><td><b>Start point</b></td><td>First nominal travel position; angular evaluations use the configured angular unit.</td></tr><tr><td><b>End point</b></td><td>Last nominal travel position.</td></tr><tr><td><b>Interval</b></td><td>Nominal spacing between positions; must be greater than zero.</td></tr><tr><td><b>Number of cycles</b></td><td>Whole number of cycles, at least one.</td></tr><tr><td><b>Measurement mode</b></td><td>Specify whether the test was bidirectional or unidirectional.</td></tr></tbody></table>
+<h3>5.4 Status / compensation</h3><p>Select SC, CC, CC2 or CC3 to identify the compensation state matching the actual test conditions and procedure.</p><h3>5.5 Tolerance</h3><p>Define a tolerance value and a unit compatible with the evaluated quantity. Linear axes offer linear units; angular axes offer angular units. Length and angle are not converted into each other.</p><p>For linear evaluations, select:</p><ul><li><b>Fixed:</b> keeps the configured fixed rule.</li><li><b>Proportional to distance from origin:</b> varies with total distance from the origin.</li><li><b>Proportional per interval:</b> applies the proportion to each interval without accumulating previous intervals.</li></ul><p>For proportional application, also enter the reference length and its unit.</p>
+<h3>5.6 Duplicate or remove an evaluation</h3><p>“Duplicate” creates another card copying the original configuration and Quick Report text. Review all fields and data before calculating. “Remove” deletes the corresponding card.</p><div class="note warning">Do not assume initial values suit every machine or test. Always confirm axis, travel, interval, cycles, tolerance, units and imported data.</div><h3>5.7 Calculate evaluations</h3><p>Once cards are configured, click “Calculate evaluations”. The application validates data and displays available results. If a card has an error, read its message, correct the configuration or Quick Report and calculate again.</p>`},
+retitude:{
+pt:`<h2>6. Avaliação de retitude</h2><p>Ao selecionar «Retitude» num eixo linear surgem campos para configurar as duas componentes de retitude, o conjunto ou linha e o tipo de coordenadas.</p><ul><li><b>Retitude 1 e Retitude 2:</b> selecione duas componentes distintas disponíveis para o eixo.</li><li><b>Conjunto / linha:</b> identifique a linha ou conjunto correspondente.</li><li><b>Tipo de coordenadas:</b> indique se as coordenadas já foram criadas ou se ainda não existe o sistema necessário.</li></ul><p>Ao selecionar «Sem coordenadas criadas», o software pode apresentar um diagnóstico para rever a criação automática do sistema local, comparando as coordenadas originais com as coordenadas locais propostas.</p><div class="note warning"><b>Confirmação necessária:</b> reveja o diagnóstico antes de confirmar a transformação. A aplicação indica se utiliza coordenadas originais do Quick Report ou coordenadas transformadas automaticamente. Não confirme sem verificar que a transformação corresponde à configuração geométrica do ensaio.</div><p>Quando há dados disponíveis, «Revisar coordenadas» abre a revisão de coordenadas de retitude.</p>`,
+en:`<h2>6. Straightness evaluation</h2><p>Selecting “Straightness” on a linear axis displays fields for the two straightness components, the set or line, and the coordinate type.</p><ul><li><b>Straightness 1 and Straightness 2:</b> select two different components available for the axis.</li><li><b>Set / line:</b> identify the corresponding line or set.</li><li><b>Coordinate type:</b> indicate whether coordinates already exist or the required coordinate system has not yet been created.</li></ul><p>When “Without a coordinate system” is selected, the software may show a diagnostic for reviewing automatic local-system creation, comparing original coordinates with the proposed local coordinates.</p><div class="note warning"><b>Confirmation required:</b> review the diagnostic before confirming the transformation. The application indicates whether it uses original Quick Report coordinates or automatically transformed coordinates. Do not confirm without checking that the transformation matches the test's geometric setup.</div><p>When data are available, “Review coordinates” opens the straightness coordinate review.</p>`},
+resultados:{
+pt:`<h2>7. Resultados e filtros</h2><p>Após um cálculo correto, surge «Resultados», com resumo do projeto, indicadores gerais, gráficos e tabelas detalhadas.</p><h3>7.1 Estado da avaliação</h3><p>Os resultados podem apresentar <span class="tag green">PASS</span> e <span class="tag amber">FAIL</span>. Interprete o estado juntamente com a tolerância configurada e os valores apresentados; não altere a tolerância apenas para obter um estado favorável.</p><h3>7.2 Filtrar resultados</h3><table><thead><tr><th>Filtro</th><th>Função</th></tr></thead><tbody><tr><td><b>Filtrar avaliação</b></td><td>Mostrar uma avaliação específica ou todas.</td></tr><tr><td><b>Filtrar estado</b></td><td>Mostrar todos os estados, apenas PASS ou apenas FAIL.</td></tr><tr><td><b>Filtrar ponto / posição</b></td><td>Pesquisar por valor de posição ou nome do ponto, por exemplo <code>500</code> ou <code>POSXCC10</code>.</td></tr></tbody></table><p>As tabelas permitem ordenar certas colunas pelo cabeçalho e expandir ou minimizar a visualização de todos os pontos.</p><h3>7.3 Exportar resultados</h3><ul><li><b>Exportar resultados filtrados CSV:</b> descarrega os dados das avaliações e linhas de resultados incluídas na exportação, num ficheiro utilizável numa folha de cálculo.</li><li><b>Copiar linhas Renishaw filtradas:</b> copia as linhas disponíveis para o fluxo de trabalho correspondente.</li></ul><div class="note">Antes de exportar, verifique a avaliação, estado e posição selecionados nos filtros. Para um relatório completo, pode escolher a impressão que ignora os filtros.</div>`,
+en:`<h2>7. Results and filters</h2><p>After a successful calculation, “Results” appears with a project summary, general indicators, charts and detailed tables.</p><h3>7.1 Evaluation status</h3><p>Results may show <span class="tag green">PASS</span> and <span class="tag amber">FAIL</span>. Interpret status together with the configured tolerance and displayed values; do not change tolerance merely to obtain a favorable status.</p><h3>7.2 Filter results</h3><table><thead><tr><th>Filter</th><th>Function</th></tr></thead><tbody><tr><td><b>Filter evaluation</b></td><td>Show one evaluation or all.</td></tr><tr><td><b>Filter status</b></td><td>Show all statuses, PASS only or FAIL only.</td></tr><tr><td><b>Filter point / position</b></td><td>Search by position value or point name, e.g. <code>500</code> or <code>POSXCC10</code>.</td></tr></tbody></table><p>Some table columns can be sorted by clicking their headings; all points can be expanded or minimized.</p><h3>7.3 Export results</h3><ul><li><b>Export filtered results CSV:</b> downloads included evaluation data and result rows as a CSV that can be opened in a spreadsheet.</li><li><b>Copy filtered Renishaw lines:</b> copies available Renishaw lines for the corresponding workflow.</li></ul><div class="note">Before exporting, check the selected evaluation, status and position filters. For a complete report, printing can be set to ignore filters.</div>`},
+compensacion:{
+pt:`<h2>8. Tabela de compensação</h2><p>«Tabela de compensação» gera tabelas a partir de avaliações calculadas; por isso, calcule primeiro as avaliações.</p><div class="steps"><div class="step"><div><b>Selecionar avaliação / eixo</b><p>Escolha uma avaliação válida da lista, preenchida com avaliações calculadas corretamente.</p></div></div><div class="step"><div><b>Escolher tipo de tabela</b><p>Selecione «Combinada» ou «Separada» quando disponíveis para o tipo de avaliação.</p></div></div><div class="step"><div><b>Selecionar controlador</b><p>Escolha SIEMENS ou FANUC. Algumas configurações impõem FANUC automaticamente conforme o eixo ou avaliação.</p></div></div><div class="step"><div><b>Definir resolução</b><p>Nas tabelas lineares selecione 0.001 mm ou 0.0001 mm. Em certos modos angulares a resolução é automática e o campo pode ficar oculto.</p></div></div><div class="step"><div><b>Gerar e rever</b><p>Clique em «Gerar tabela de compensação» e reveja a mensagem, eixo, controlador, tipo de tabela e todos os valores.</p></div></div></div><h3>8.1 Combinada e separada</h3><ul><li><b>Combinada:</b> gera uma tabela combinada segundo o método do controlador e da avaliação.</li><li><b>Separada:</b> gera tabelas direcionais quando o método o permite.</li></ul><h3>8.2 Convenção e controlador</h3><p>A aplicação distingue a convenção do controlador: para SIEMENS, «Absolute · As errors»; para FANUC, «Incremental · As compensations». Os modos angulares específicos apresentam indicações próprias.</p><h3>8.3 Seleção para relatório e exportação</h3><p>As tabelas geradas podem ser marcadas ou desmarcadas em «Tabelas para incluir no relatório». Também podem ser copiadas ou exportadas em CSV. Para imprimir uma tabela, gere-a primeiro e marque-a para inclusão.</p><div class="note warning">Nem todas as combinações de eixo, tipo de avaliação, controlador e sentido de medição são compatíveis. A aplicação pode bloquear uma combinação ou avisar quando faltam percursos, posições coincidentes ou pontos de referência. Não ignore os avisos nem invente dados.</div>`,
+en:`<h2>8. Compensation table</h2><p>“Compensation table” generates tables from calculated evaluation results, so calculate evaluations first.</p><div class="steps"><div class="step"><div><b>Select evaluation / axis</b><p>Choose a valid evaluation from the list of successfully calculated evaluations.</p></div></div><div class="step"><div><b>Choose table type</b><p>Select “Combined” or “Separate” when available for the evaluation type.</p></div></div><div class="step"><div><b>Select controller</b><p>Choose SIEMENS or FANUC. Some settings automatically require FANUC depending on axis or evaluation.</p></div></div><div class="step"><div><b>Set resolution</b><p>For linear tables select 0.001 mm or 0.0001 mm. In certain angular modes resolution is automatic and the field may be hidden.</p></div></div><div class="step"><div><b>Generate and review</b><p>Click “Generate compensation table” and review the message, axis, controller, table type and every generated value.</p></div></div></div><h3>8.1 Combined and separate</h3><ul><li><b>Combined:</b> generates a combined table according to the controller and evaluation method.</li><li><b>Separate:</b> generates directional tables when supported by the selected method.</li></ul><h3>8.2 Convention and controller</h3><p>The application distinguishes controller conventions: SIEMENS uses “Absolute · As errors”; FANUC uses “Incremental · As compensations”. Specific angular modes have their own guidance.</p><h3>8.3 Report selection and export</h3><p>Generated tables can be selected or deselected in “Tables to include in report”. Tables can also be copied or exported as CSV. To print a table, generate it first and select it for inclusion.</p><div class="note warning">Not all combinations of axis, evaluation type, controller and measurement direction are compatible. The application may block a combination or warn about missing traverses, matching positions or reference points. Do not ignore warnings or invent data.</div>`},
+esquadraje:{
+pt:`<h2>9. Esquadrejamento</h2><p>«ESQUADRAJE» avalia o desvio do segundo eixo da combinação selecionada relativamente ao primeiro ponto importado.</p><div class="steps"><div class="step"><div><b>Adicionar esquadrejamento</b><p>Clique em «Adicionar ESQUADRAJE» para criar um cartão.</p></div></div><div class="step"><div><b>Importar Quick Report</b><p>Cole o Quick Report e clique em «Ler Quick Report».</p></div></div><div class="step"><div><b>Selecionar tipo</b><p>Escolha ZX, ZY, YX, XY, XZ ou YZ.</p></div></div><div class="step"><div><b>Configurar tolerância, se aplicável</b><p>A tolerância é opcional. Se utilizada, selecione a unidade e o modo de aplicação.</p></div></div><div class="step"><div><b>Calcular</b><p>Clique em «Calcular ESQUADRAJE» e reveja o estado, resumo e tabela de pontos e desvios.</p></div></div></div><h3>9.1 Aplicação da tolerância</h3><ul><li><b>Fixa:</b> usa o valor fixo definido.</li><li><b>Proporcional à distância da origem:</b> varia com a distância total à origem e requer comprimento de referência.</li><li><b>Proporcional por intervalo:</b> aplica a proporção a cada passo, sem acumular os anteriores; requer comprimento de referência.</li></ul><div class="note warning"><b>Condição prévia:</b> o Quick Report deve estar alinhado e o Best Fit concluído no software metrológico. Esta ferramenta não alinha, reconstrói a geometria nem modifica as coordenadas originais.</div>`,
+en:`<h2>9. Squareness</h2><p>“ESQUADRAJE” evaluates deviation of the second axis of the selected combination relative to the first imported point.</p><div class="steps"><div class="step"><div><b>Add squareness</b><p>Click “Add ESQUADRAJE” to create an analysis card.</p></div></div><div class="step"><div><b>Import Quick Report</b><p>Paste the test Quick Report and click “Read Quick Report”.</p></div></div><div class="step"><div><b>Select type</b><p>Choose ZX, ZY, YX, XY, XZ or YZ.</p></div></div><div class="step"><div><b>Set tolerance if applicable</b><p>Tolerance is optional. If used, select its unit and application mode.</p></div></div><div class="step"><div><b>Calculate</b><p>Click “Calculate ESQUADRAJE” and review the status, summary and point/deviation table.</p></div></div></div><h3>9.1 Tolerance application</h3><ul><li><b>Fixed:</b> uses the defined fixed value.</li><li><b>Proportional to distance from origin:</b> varies with total distance from the origin and requires a reference length.</li><li><b>Proportional per interval:</b> applies the proportion to each measurement step without accumulating previous steps; requires a reference length.</li></ul><div class="note warning"><b>Prerequisite:</b> the Quick Report must be aligned and Best Fit completed in the metrology software. This tool does not align, reconstruct geometry or modify original coordinates.</div>`},
+complementarias:{
+pt:`<h2>10. Análises complementares</h2><p>Esta secção documenta resultados de outros programas metrológicos. Os dados são incluídos no relatório sem recálculo ou transformação dos resultados externos.</p><h3>10.1 Criar uma análise</h3><ol><li>Clique em «Adicionar análise».</li><li>Introduza um título descritivo.</li><li>Adicione imagens e respetivas legendas quando necessário.</li><li>Configure verificações básicas ou análise de tolerância, se aplicável.</li><li>Inclua Quick Reports de origem e dados complementares a documentar.</li></ol><h3>10.2 Verificações básicas</h3><p>É possível ativar «Ponto máximo» e «Ponto mínimo», escolher o Quick Report de origem e a coluna ou parâmetro a consultar. Indique a unidade quando necessário.</p><h3>10.3 Análise de tolerância</h3><p>Ative a análise e selecione o Quick Report, a coluna ou parâmetro, a unidade original da coluna, a unidade de tolerância e o formato:</p><ul><li><b>Bilateral simétrica (±)</b></li><li><b>Limite máximo e mínimo</b></li><li><b>Limite máximo permitido</b></li><li><b>Limite mínimo permitido</b></li></ul><p>A aplicação prevê conversão entre milímetros e micrómetros (1 mm = 1000 µm). Graus não são convertidos em unidades lineares.</p><h3>10.4 Armazenamento local e backup</h3><div class="note warning">As análises complementares são guardadas no armazenamento local do navegador. Não são um histórico central partilhado entre utilizadores ou equipamentos.</div><p>Para transferir ou conservar uma cópia, utilize «Exportar backup JSON». Para recuperar uma cópia, utilize «Importar backup JSON» e selecione o ficheiro correspondente.</p><p>As imagens e os dados complementares também fazem parte deste armazenamento local. Mantenha cópias de segurança quando importantes para o processo.</p>`,
+en:`<h2>10. Complementary analyses</h2><p>This section documents results from other metrology programs. Data are included in the report without recalculating or transforming external results.</p><h3>10.1 Create an analysis</h3><ol><li>Click “Add analysis”.</li><li>Enter a descriptive title.</li><li>Add images and captions when needed.</li><li>Configure basic checks or tolerance analysis if applicable.</li><li>Include source Quick Reports and supplementary data to document.</li></ol><h3>10.2 Basic checks</h3><p>Enable “Maximum point” and “Minimum point”, choose the source Quick Report and select the column or parameter to inspect. Specify a unit when needed.</p><h3>10.3 Tolerance analysis</h3><p>Enable the analysis and select the source Quick Report, column or parameter, original column unit, tolerance unit and format:</p><ul><li><b>Symmetric bilateral (±)</b></li><li><b>Maximum and minimum limits</b></li><li><b>Maximum permitted limit</b></li><li><b>Minimum permitted limit</b></li></ul><p>The application supports conversion between millimeters and micrometers (1 mm = 1000 µm). Degrees are not converted to linear units.</p><h3>10.4 Local storage and backup</h3><div class="note warning">Complementary analyses are stored in the browser's local storage. This is not a centralized history shared between users or devices.</div><p>To transfer or retain a copy, use “Export JSON backup”. To restore one, use “Import JSON backup” and select the corresponding file.</p><p>Images and supplementary data are also stored locally. Keep backups when they are important to the record.</p>`},
+informe:{
+pt:`<h2>11. Preparar e imprimir relatório</h2><p>«Imprimir relatório» permite selecionar um formato predefinido ou personalizar as secções incluídas. A saída é preparada para impressão A4 e pode ser guardada em PDF no diálogo do navegador.</p><h3>11.1 Formatos predefinidos</h3><table><thead><tr><th>Formato</th><th>Conteúdo previsto</th></tr></thead><tbody><tr><td><b>Relatório completo</b></td><td>Dados do projeto, resumo, gráficos, tabelas de pontos, esquadrejamento, análises complementares e tabelas de compensação disponíveis.</td></tr><tr><td><b>Resumo geral de dados</b></td><td>Dados do projeto e resumo geral dos resultados.</td></tr><tr><td><b>Somente gráficos</b></td><td>Dados do projeto e gráficos com marcadores de pontos.</td></tr><tr><td><b>Gráficos + tabela de pontos</b></td><td>Dados do projeto, gráficos e tabelas detalhadas de pontos.</td></tr><tr><td><b>Somente tabela de compensação</b></td><td>Tabelas de compensação selecionadas e previamente geradas.</td></tr><tr><td><b>Somente esquadrejamento</b></td><td>Dados do projeto, resultados de esquadrejamento e respetivas tabelas de pontos.</td></tr><tr><td><b>Personalizado</b></td><td>Permite marcar ou desmarcar individualmente as secções disponíveis.</td></tr></tbody></table><h3>11.2 Secções personalizáveis</h3><ul><li>Dados do projeto e máquina.</li><li>Resumo geral dos resultados.</li><li>Gráficos.</li><li>Tabelas com todos os pontos.</li><li>Resultados de esquadrejamento.</li><li>Análises complementares.</li><li>Tabela(s) de compensação.</li></ul><p>Também é possível imprimir todas as avaliações e pontos, ignorando os filtros da tabela de resultados.</p><h3>11.3 Observações e PDF</h3><ol><li>Escreva as observações para o relatório.</li><li>Confirme que as avaliações, compensações ou esquadrejamentos a incluir foram gerados.</li><li>Selecione «Imprimir seleção».</li><li>No navegador, escolha uma impressora ou «Guardar como PDF».</li><li>Reveja o documento final antes de o arquivar ou distribuir.</li></ol><div class="note warning">Se o formato exigir resultados ainda não calculados, a aplicação mostrará um aviso. Para imprimir tabelas de compensação, gere-as primeiro e selecione as que devem ser incluídas.</div>`,
+en:`<h2>11. Prepare and print a report</h2><p>“Print report” lets you select a preset or customize included sections. Output is prepared for A4 printing and can be saved as PDF in the browser print dialog.</p><h3>11.1 Preset formats</h3><table><thead><tr><th>Format</th><th>Intended contents</th></tr></thead><tbody><tr><td><b>Complete report</b></td><td>Project data, summary, charts, point tables, squareness, complementary analyses and available compensation tables.</td></tr><tr><td><b>General data summary</b></td><td>Project data and general results summary.</td></tr><tr><td><b>Charts only</b></td><td>Project data and charts with point markers.</td></tr><tr><td><b>Charts + point table</b></td><td>Project data, charts and detailed point tables.</td></tr><tr><td><b>Compensation table only</b></td><td>Previously generated and selected compensation tables.</td></tr><tr><td><b>Squareness only</b></td><td>Project data, squareness results and corresponding point tables.</td></tr><tr><td><b>Custom</b></td><td>Individually select or deselect available sections.</td></tr></tbody></table><h3>11.2 Customizable sections</h3><ul><li>Project and machine data.</li><li>General results summary.</li><li>Charts.</li><li>Tables with all points.</li><li>Squareness results.</li><li>Complementary analyses.</li><li>Compensation table(s).</li></ul><p>There is also an option to print all evaluations and points, ignoring result-table filters.</p><h3>11.3 Observations and PDF output</h3><ol><li>Enter observations for the report.</li><li>Check that evaluations, compensation tables or squareness results to include have been generated.</li><li>Select “Print selection”.</li><li>In the browser dialog, choose a printer or “Save as PDF”.</li><li>Review the final document before archiving or distributing it.</li></ol><div class="note warning">The application warns if the selected format requires results not yet calculated. To print compensation tables, generate them first and select those to include.</div>`},
+exportaciones:{
+pt:`<h2>12. Exportações e cópias</h2><table><thead><tr><th>Função</th><th>Resultado</th><th>Quando utilizar</th></tr></thead><tbody><tr><td>Exportar resultados filtrados CSV</td><td>Ficheiro CSV com linhas de resultados.</td><td>Para analisar ou partilhar dados tabulares.</td></tr><tr><td>Copiar linhas Renishaw filtradas</td><td>Texto com as linhas Renishaw disponíveis.</td><td>Para reutilizar as linhas no respetivo fluxo.</td></tr><tr><td>Copiar tabela de compensação</td><td>Conteúdo da tabela na área de transferência.</td><td>Para transferir valores para outra ferramenta.</td></tr><tr><td>Exportar tabela de compensação CSV</td><td>Ficheiro CSV da tabela gerada.</td><td>Para guardar ou rever numa folha de cálculo.</td></tr><tr><td>Exportar backup JSON</td><td>Ficheiro de cópia das análises complementares.</td><td>Para conservar ou transferir os dados locais complementares.</td></tr><tr><td>Imprimir seleção</td><td>Documento impresso ou PDF.</td><td>Para emitir o relatório técnico.</td></tr></tbody></table>`,
+en:`<h2>12. Exports and copies</h2><table><thead><tr><th>Function</th><th>Result</th><th>When to use</th></tr></thead><tbody><tr><td>Export filtered results CSV</td><td>CSV file of result rows.</td><td>To analyze or share tabular data.</td></tr><tr><td>Copy filtered Renishaw lines</td><td>Text with available Renishaw lines.</td><td>To reuse the lines in the relevant workflow.</td></tr><tr><td>Copy compensation table</td><td>Table contents on the clipboard.</td><td>To transfer values to another tool.</td></tr><tr><td>Export compensation table CSV</td><td>CSV file of the generated table.</td><td>To save or review it in a spreadsheet.</td></tr><tr><td>Export JSON backup</td><td>Backup file of complementary analyses.</td><td>To retain or transfer local supplementary data.</td></tr><tr><td>Print selection</td><td>Printed document or PDF.</td><td>To issue the technical report.</td></tr></tbody></table>`},
+"buenas-practicas":{
+pt:`<h2>13. Boas práticas operacionais</h2><ul><li>Verifique se o Quick Report corresponde à máquina, eixo, ensaio e curso corretos.</li><li>Utilize um cartão independente por avaliação e grupo de pontos.</li><li>Reveja cabeçalhos, nomes de pontos, coordenadas e unidades antes de calcular.</li><li>Confirme ponto inicial, ponto final, intervalo, ciclos e modo de medição face ao ensaio real.</li><li>Verifique a tolerância e a unidade antes de interpretar PASS ou FAIL.</li><li>Leia todos os avisos e erros apresentados pela aplicação.</li><li>Reveja resultados e tabelas de compensação antes de exportar.</li><li>Guarde CSV, PDF e backups JSON na localização documental definida pela empresa.</li><li>Antes de fechar ou atualizar a página, exporte ou imprima os resultados a conservar.</li></ul>`,
+en:`<h2>13. Good operating practices</h2><ul><li>Check that the Quick Report matches the correct machine, axis, test and travel.</li><li>Use a separate card for each evaluation and point group.</li><li>Review headings, point names, coordinates and units before calculating.</li><li>Confirm start, end, interval, cycles and measurement mode against the actual test.</li><li>Check tolerance and unit before interpreting PASS or FAIL.</li><li>Read all application warnings and errors.</li><li>Review results and compensation tables before exporting.</li><li>Save CSV, PDF and JSON backups in the company's designated document location.</li><li>Before closing or refreshing the page, export or print results that must be retained.</li></ul>`},
+limitaciones:{
+pt:`<h2>14. Âmbito e limitações conhecidas</h2><div class="note danger"><b>A aplicação não deve ser tratada como armazenamento permanente de todos os ensaios.</b> A versão analisada indica que os dados são processados no navegador e não são enviados a servidores.</div><ul><li>Os Quick Reports e configurações principais são processados na sessão do navegador; a interface analisada não apresenta uma função geral de guardar projetos ou recuperar sessões.</li><li>As análises complementares têm armazenamento local no navegador e funções de exportação e importação de backup JSON.</li><li>O backup JSON das análises complementares não equivale a uma cópia completa do projeto nem inclui automaticamente todos os resultados e configurações das restantes secções.</li><li>Os dados locais podem não estar disponíveis noutro navegador, perfil ou equipamento e podem perder-se ao limpar os dados do navegador.</li><li>A ferramenta não substitui o alinhamento, Best Fit, aquisição de medições ou validação metrológica realizados no software de origem.</li></ul><p>Uma futura versão com histórico centralizado, recuperação de formulários e rastreabilidade por utilizador exigiria integração do armazenamento de projetos e resultados com uma base de dados e definição de permissões de acesso.</p>`,
+en:`<h2>14. Scope and known limitations</h2><div class="note danger"><b>The application must not be treated as permanent storage for all tests.</b> The reviewed version states that processing occurs in the browser and data are not sent to servers.</div><ul><li>Quick Reports and main configurations are processed in the browser session; the reviewed interface has no general project-save or session-recovery function.</li><li>Complementary analyses do have local browser storage and JSON backup export and import.</li><li>The complementary-analysis JSON backup is not a complete project copy and does not automatically include all results and settings from other sections.</li><li>Local data may be unavailable in another browser, user profile or device, and may be lost when browser data are cleared.</li><li>The tool does not replace alignment, Best Fit, measurement acquisition or metrological validation in the source software.</li></ul><p>A future version with centralized history, form recovery and user traceability would require integrating project and result storage with a database and defining access permissions.</p>`},
+glosario:{
+pt:`<h2>15. Glossário</h2><table><thead><tr><th>Termo</th><th>Significado neste manual</th></tr></thead><tbody><tr><td><b>Quick Report</b></td><td>Bloco de texto exportado do software metrológico com grupos, pontos e coordenadas.</td></tr><tr><td><b>Grupo</b></td><td>Conjunto de pontos identificado no Quick Report.</td></tr><tr><td><b>Bidirecional</b></td><td>Medição com percursos nos dois sentidos.</td></tr><tr><td><b>Unidirecional</b></td><td>Medição realizada num único sentido.</td></tr><tr><td><b>PASS / FAIL</b></td><td>Estados apresentados pela aplicação relativamente à tolerância configurada.</td></tr><tr><td><b>CSV</b></td><td>Formato tabular que pode ser aberto numa folha de cálculo.</td></tr><tr><td><b>JSON</b></td><td>Formato estruturado usado no backup de análises complementares.</td></tr><tr><td><b>Best Fit</b></td><td>Ajuste/alinhamento realizado no software metrológico antes da análise de esquadrejamento.</td></tr></tbody></table>`,
+en:`<h2>15. Glossary</h2><table><thead><tr><th>Term</th><th>Meaning in this manual</th></tr></thead><tbody><tr><td><b>Quick Report</b></td><td>Text block exported from metrology software containing groups, points and coordinates.</td></tr><tr><td><b>Group</b></td><td>Set of points identified within a Quick Report.</td></tr><tr><td><b>Bidirectional</b></td><td>Measurement mode involving travel in both directions.</td></tr><tr><td><b>Unidirectional</b></td><td>Measurement mode performed in one direction.</td></tr><tr><td><b>PASS / FAIL</b></td><td>Evaluation statuses presented against the configured tolerance.</td></tr><tr><td><b>CSV</b></td><td>Tabular file format that can be opened in spreadsheet software.</td></tr><tr><td><b>JSON</b></td><td>Structured format used for complementary-analysis backups.</td></tr><tr><td><b>Best Fit</b></td><td>Fit/alignment performed in the metrology software before squareness analysis.</td></tr></tbody></table>`}
+};
+const links=[...document.querySelectorAll('nav a')];
+const sections=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const originalSections=Object.fromEntries(sections.map(section=>[section.id,section.innerHTML]));
+const ui={
+ es:{title:"Manual de usuario",subtitle:"Software de geometría de máquinas",kicker:"Documentación interna · Metrakys Metrology",chips:["Uso interno","Guía operativa","Versión basada en V8 Geral","ES · EN · PT en la aplicación"],contents:"Contenido",search:"Buscar en el manual…",searchLabel:"Buscar secciones y contenido",empty:"Ninguna sección coincide con la búsqueda.",expandAll:"Expandir secciones",collapseAll:"Contraer secciones",expand:"Expandir",collapse:"Contraer",language:"Idioma",dark:"Tema oscuro",light:"Tema claro",print:"Imprimir / Guardar como PDF",top:"Volver al inicio",progress:"Progreso de lectura",footer:"METRAKYS METROLOGY · Documento interno de apoyo al usuario · Consultar siempre el procedimiento técnico vigente.",storage:"No se pudieron guardar las preferencias del manual."},
+ pt:{title:"Manual do utilizador",subtitle:"Software de geometria de máquinas",kicker:"Documentação interna · Metrakys Metrology",chips:["Uso interno","Guia operacional","Versão baseada na V8 Geral","ES · EN · PT na aplicação"],contents:"Conteúdo",search:"Pesquisar no manual…",searchLabel:"Pesquisar secções e conteúdo",empty:"Nenhuma secção corresponde à pesquisa.",expandAll:"Expandir secções",collapseAll:"Recolher secções",expand:"Expandir",collapse:"Recolher",language:"Idioma",dark:"Tema escuro",light:"Tema claro",print:"Imprimir / Guardar como PDF",top:"Voltar ao início",progress:"Progresso de leitura",footer:"METRAKYS METROLOGY · Documento interno de apoio ao utilizador · Consulte sempre o procedimento técnico vigente.",storage:"Não foi possível guardar as preferências do manual."},
+ en:{title:"User manual",subtitle:"Machine geometry software",kicker:"Internal documentation · Metrakys Metrology",chips:["Internal use","Operating guide","Based on V8 Geral","ES · EN · PT in the application"],contents:"Contents",search:"Search the manual…",searchLabel:"Search sections and content",empty:"No sections match your search.",expandAll:"Expand sections",collapseAll:"Collapse sections",expand:"Expand",collapse:"Collapse",language:"Language",dark:"Dark theme",light:"Light theme",print:"Print / Save as PDF",top:"Back to top",progress:"Reading progress",footer:"METRAKYS METROLOGY · Internal user-support document · Always consult the current technical procedure.",storage:"Could not save manual preferences."}
+};
+const search=document.getElementById('navSearch');
+const languageSelect=document.getElementById('manualLanguage');
+const themeToggle=document.getElementById('themeToggle');
+const status=document.getElementById('preferenceStatus');
+const preferenceKey="metrakys.geometry.manual.preferences.v1";
+const collapsed={};
+let language="es",theme="light";
+try{
+ const saved=JSON.parse(localStorage.getItem(preferenceKey)||"null");
+ if(saved&&ui[saved.language])language=saved.language;
+ if(saved&&["light","dark"].includes(saved.theme))theme=saved.theme;
+}catch(error){console.warn("Could not read manual preferences.",error);status.hidden=false;status.textContent=ui[language].storage;}
+function persistPreferences(){
+ try{localStorage.setItem(preferenceKey,JSON.stringify({language,theme}));status.hidden=true;}
+ catch(error){console.error("Could not save manual preferences.",error);status.textContent=ui[language].storage;status.hidden=false;}
+}
+function setTheme(){
+ document.documentElement.dataset.theme=theme;
+ themeToggle.textContent=ui[language][theme==="light"?"dark":"light"];
+}
+function setSectionState(section,isCollapsed){
+ const content=section.querySelector('.section-content'),button=section.querySelector('.section-toggle');
+ content.hidden=isCollapsed;
+ button.setAttribute('aria-expanded',String(!isCollapsed));
+ button.textContent=ui[language][isCollapsed?"expand":"collapse"];
+ button.setAttribute('aria-label',`${button.textContent} · ${section.querySelector('h2').textContent}`);
+}
+function buildSection(section){
+ const heading=section.querySelector('h2');
+ const head=document.createElement('div');head.className='section-heading';
+ const content=document.createElement('div');content.className='section-content';content.id='content-'+section.id;
+ head.appendChild(heading);
+ const button=document.createElement('button');button.type='button';button.className='section-toggle';button.setAttribute('aria-controls',content.id);head.appendChild(button);
+ while(section.firstChild)content.appendChild(section.firstChild);
+ section.append(head,content);
+ setSectionState(section,!!collapsed[section.id]);
+}
+function normalize(value){return value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase();}
+function filterSections(){
+ const query=normalize(search.value.trim());let count=0;
+ sections.forEach((section,index)=>{
+  const visible=!query||normalize(section.textContent).includes(query);
+  section.hidden=!visible;links[index].hidden=!visible;
+  if(visible){count++;setSectionState(section,query?false:!!collapsed[section.id]);}
+ });
+ document.getElementById('navEmpty').hidden=count!==0;
+ updateProgress();
+}
+function renderLanguage(){
+ const t=ui[language];document.documentElement.lang=language;document.title=t.title+' | Metrakys';
+ document.querySelector('.kicker').textContent=t.kicker;document.querySelector('h1').textContent=t.title;document.querySelector('.subtitle').textContent=t.subtitle;
+ document.querySelectorAll('.chip').forEach((item,index)=>item.textContent=t.chips[index]);
+ document.querySelector('nav > strong').textContent=t.contents;search.placeholder=t.search;search.setAttribute('aria-label',t.searchLabel);document.getElementById('navEmpty').textContent=t.empty;
+ document.getElementById('languageLabel').textContent=t.language;languageSelect.value=language;
+ document.getElementById('expandSections').textContent=t.expandAll;document.getElementById('collapseSections').textContent=t.collapseAll;
+ document.querySelector('.actions button:first-child').textContent=t.print;document.querySelector('.actions button:last-child').textContent=t.top;document.querySelector('footer').textContent=t.footer;
+ document.querySelector('.manual-progress').setAttribute('aria-label',t.progress);
+ sections.forEach((section,index)=>{
+  section.innerHTML=language==="es"?originalSections[section.id]:localizedSections[section.id][language];
+  buildSection(section);links[index].textContent=section.querySelector('h2').textContent;
+ });
+ setTheme();filterSections();
+}
+function updateProgress(){
+ const root=document.documentElement,max=root.scrollHeight-window.innerHeight;
+ const value=max>0?Math.max(0,Math.min(100,Math.round(window.scrollY/max*100))):100;
+ document.querySelector('.manual-progress span').style.width=value+'%';document.querySelector('.manual-progress').setAttribute('aria-valuenow',String(value));
+}
+languageSelect.addEventListener('change',()=>{language=languageSelect.value;renderLanguage();persistPreferences();});
+themeToggle.addEventListener('click',()=>{theme=theme==="light"?"dark":"light";setTheme();persistPreferences();});
+search.addEventListener('input',filterSections);
+document.querySelector('main').addEventListener('click',event=>{
+ const button=event.target.closest('.section-toggle');if(!button)return;
+ const section=button.closest('.card');collapsed[section.id]=button.getAttribute('aria-expanded')==="true";setSectionState(section,collapsed[section.id]);updateProgress();
+});
+document.getElementById('expandSections').addEventListener('click',()=>{sections.forEach(section=>{collapsed[section.id]=false;setSectionState(section,false);});updateProgress();});
+document.getElementById('collapseSections').addEventListener('click',()=>{sections.forEach(section=>{collapsed[section.id]=true;setSectionState(section,true);});updateProgress();});
+links.forEach((link,index)=>link.addEventListener('click',()=>{collapsed[sections[index].id]=false;setSectionState(sections[index],false);}));
+window.addEventListener('scroll',updateProgress,{passive:true});window.addEventListener('resize',updateProgress);
+const observer=new IntersectionObserver(entries=>{
+ entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+entry.target.id));}});
+},{rootMargin:'-15% 0px -70% 0px'});
+sections.forEach(section=>observer.observe(section));
+renderLanguage();
+</script>
+</body>
+</html>

@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07111e">
+<title>Metrakys · Technical Knowledge Center</title>
+<script>
+(()=>{let theme="dark";try{const saved=localStorage.getItem("metrakys.technical-center.theme");if(saved==="light"||saved==="dark")theme=saved}catch(error){console.warn("Could not load the saved theme before rendering.",error)}document.documentElement.dataset.theme=theme})();
+</script>
+<style>
+:root{color-scheme:dark;--bg:#07111e;--panel:#0d1b2b;--panel2:#112338;--line:#243d56;--ink:#edf5fb;--muted:#91a5b8;--cyan:#41d7f4;--blue:#338de1;--orange:#f3a64a}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 75% 38%,#12507955,transparent 48%),linear-gradient(135deg,#06101d,#081827 58%,#0b1c2a);color:var(--ink);font:14px/1.55 Inter,"Segoe UI",Arial,sans-serif}
+button,input,select{font:inherit}
+a{color:inherit;text-decoration:none}
+.shell{width:min(1480px,calc(100% - 64px));min-height:100vh;margin:auto;display:grid;grid-template-rows:auto 1fr auto}
+.topbar,.footer{display:flex;align-items:center;justify-content:space-between;gap:18px}
+.topbar{padding:16px 0;border-bottom:1px solid #25415b}
+.brand{display:flex;align-items:center;gap:16px}
+.brand img{width:142px;max-height:48px;object-fit:contain;object-position:left center}
+.brand-copy{border-left:1px solid var(--line);padding-left:16px}
+.brand-copy small,.eyebrow,.footer{color:var(--muted);font:800 9px "Cascadia Code",Consolas,monospace;letter-spacing:.16em;text-transform:uppercase}
+.brand-copy strong{display:block;color:var(--cyan);font:800 10px "Cascadia Code",Consolas,monospace;letter-spacing:.09em}
+.language{padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink)}
+main{width:100%;max-width:1280px;margin:auto;padding:clamp(35px,6vh,74px) 0}
+.hero{display:grid;grid-template-columns:minmax(290px,.85fr) minmax(380px,1.15fr);align-items:center;gap:clamp(26px,5vw,78px)}
+.hero-copy{max-width:530px}
+.eyebrow{color:var(--cyan)}
+h1{margin:16px 0 12px;font-size:clamp(44px,6vw,76px);line-height:.98;letter-spacing:-.06em}
+h1 span{display:block;margin-top:12px;color:var(--cyan);font-size:.52em;letter-spacing:.12em}
+.intro{max-width:460px;margin:0;color:var(--muted);font-size:14px;line-height:1.75}
+.hero-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:24px 0 0}
+.hero-meta div{padding:9px 11px;border-left:2px solid var(--cyan);background:linear-gradient(90deg,#12314a77,transparent)}
+.hero-meta b{display:block;color:#8aa6bc;font:800 8px "Cascadia Code",Consolas,monospace;letter-spacing:.12em;text-transform:uppercase}
+.hero-meta span{font-size:11px;font-weight:750}
+.machine{position:relative;min-width:0;padding:16px;background:#fff;box-shadow:0 24px 58px #0007}
+.machine img{display:block;width:100%;max-height:390px;object-fit:contain}
+.machine-caption{position:absolute;right:13px;bottom:9px;color:#75a0ba;font:800 8px "Cascadia Code",Consolas,monospace;letter-spacing:.1em}
+.catalog{margin-top:clamp(42px,8vh,78px)}
+.catalog-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:16px}
+.catalog-head h2{margin:0;font-size:15px;letter-spacing:.14em;text-transform:uppercase}
+.catalog-head p{margin:5px 0 0;color:var(--muted);font-size:11px}
+.search{width:min(100%,360px);height:43px;padding:0 13px;border:1px solid var(--line);border-radius:9px;background:#0d1b2b;color:var(--ink)}
+.search:focus-visible,.language:focus-visible,.work-link:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.card{--accent:var(--cyan);min-height:156px;position:relative;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;padding:18px 20px;border:1px solid var(--line);border-radius:11px;background:linear-gradient(145deg,var(--panel),var(--panel2));transition:transform .2s,border-color .2s,box-shadow .2s}
+.card[hidden],.empty[hidden]{display:none}
+.card:before{position:absolute;inset:0 auto 0 0;width:3px;background:var(--accent);content:""}
+.card:after{position:absolute;right:-58px;top:-62px;width:120px;height:120px;border:1px solid #829db818;border-radius:50%;box-shadow:0 0 0 15px #829db809,0 0 0 31px #829db806;content:""}
+.card.available:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 12px 32px #0005}
+.card.pending{--accent:var(--orange);opacity:.84}
+.card-top,.card-bottom{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.card-code{color:var(--accent);font:800 10px "Cascadia Code",Consolas,monospace;letter-spacing:.08em}
+.card-state{padding:4px 7px;border:1px solid #41d7f444;border-radius:999px;color:var(--cyan);font:800 8px "Cascadia Code",Consolas,monospace;letter-spacing:.06em;text-transform:uppercase}
+.pending .card-state{border-color:#f3a64a55;color:var(--orange)}
+.card h3{position:relative;z-index:1;margin:18px 0 4px;font-size:18px;font-weight:650}
+.card p{position:relative;z-index:1;margin:0;color:var(--muted);font-size:11px}
+.card-bottom{margin-top:15px;color:var(--muted);font-size:10px}
+.work-link{color:var(--cyan);font-weight:750}
+.pending .card-bottom{color:var(--orange)}
+.empty{margin:16px 0 0;padding:13px;border:1px dashed var(--line);border-radius:9px;color:var(--muted);text-align:center}
+.footer{margin-top:24px;padding:14px 0 18px;border-top:1px solid #25415b;font-size:8px}
+@media(max-width:800px){.hero{grid-template-columns:1fr;gap:22px}.hero-copy{max-width:640px}.machine{max-width:680px;width:100%;margin:auto}.machine img{max-height:310px}.catalog{margin-top:44px}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.shell{width:calc(100% - 32px)}.topbar{padding:12px 0}.brand{gap:10px}.brand img{width:112px}.brand-copy{padding-left:10px}.brand-copy small{font-size:7px;letter-spacing:.1em}.brand-copy strong{font-size:8px}.language{padding:8px 7px;font-size:10px}.hero-meta{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.hero-meta div{padding:8px 7px}.hero-meta b{font-size:7px}.hero-meta span{font-size:9px}.catalog-head{align-items:stretch;flex-direction:column}.search{width:100%}.cards{grid-template-columns:1fr}.card{min-height:138px}.footer{align-items:flex-start;flex-direction:column;gap:5px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+:root{--bg-deep:#06101d;--input-bg:#0d1b2b;--page-glow:rgba(18,80,121,.34);--page-blue:rgba(51,141,225,.12);--meta-surface:linear-gradient(90deg,rgba(18,49,74,.48),transparent);--ring-color:rgba(130,157,184,.1);--soft-cyan:rgba(65,215,244,.28);--visual-paper:#f7f9fb;--visual-grid:rgba(145,188,214,.10);--panel-shadow:rgba(0,0,0,.32);--focus-shadow:rgba(65,215,244,.14)}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#07111e;--bg-deep:#06101d;--panel:#0d1b2b;--panel2:#112338;--line:#243d56;--ink:#edf5fb;--muted:#91a5b8;--cyan:#41d7f4;--blue:#338de1;--orange:#f3a64a;--input-bg:#0d1b2b;--page-glow:rgba(18,80,121,.34);--page-blue:rgba(51,141,225,.12);--meta-surface:linear-gradient(90deg,rgba(18,49,74,.48),transparent);--ring-color:rgba(130,157,184,.1);--soft-cyan:rgba(65,215,244,.28);--visual-grid:rgba(145,188,214,.10);--panel-shadow:rgba(0,0,0,.32);--focus-shadow:rgba(65,215,244,.14)}
+:root[data-theme="light"]{color-scheme:light;--bg:#f1f5f8;--bg-deep:#e9f0f5;--panel:#ffffff;--panel2:#f7fafc;--line:#c7d5df;--ink:#172a3a;--muted:#52697b;--cyan:#087d9f;--blue:#236eb0;--orange:#9a5400;--input-bg:#ffffff;--page-glow:rgba(42,126,160,.13);--page-blue:rgba(43,111,177,.08);--meta-surface:linear-gradient(90deg,rgba(8,125,159,.10),transparent);--ring-color:rgba(37,76,103,.10);--soft-cyan:rgba(8,125,159,.20);--visual-grid:rgba(27,73,102,.09);--panel-shadow:rgba(22,51,73,.14);--focus-shadow:rgba(8,125,159,.12)}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(ellipse at 78% 27%,var(--page-glow),transparent 48%),radial-gradient(ellipse at 5% 90%,var(--page-blue),transparent 42%),linear-gradient(135deg,var(--bg-deep),var(--bg) 58%,var(--bg-deep));color:var(--ink);transition:background-color .3s,color .3s}
+.topbar,.footer{border-color:var(--line)}
+.brand-copy{border-color:var(--line)}
+.top-actions{display:flex;align-items:center;justify-content:flex-end;gap:9px;flex-wrap:wrap}
+.language,.search,.theme-toggle{border:1px solid var(--line);border-radius:9px;background:var(--input-bg);color:var(--ink);transition:background-color .25s,color .25s,border-color .25s,box-shadow .25s}
+.language{padding:9px 11px}
+.theme-toggle{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;min-height:40px;cursor:pointer;font-size:11px;font-weight:750}
+.theme-toggle:hover,.language:hover,.search:hover{border-color:var(--cyan);box-shadow:0 0 0 3px var(--focus-shadow)}
+.theme-glyph{color:var(--orange);font-size:17px;line-height:1}
+.theme-toggle:focus-visible,.language:focus-visible,.search:focus-visible,.work-link:focus-visible,.visual-controls button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+main{max-width:1340px;padding:clamp(28px,5vh,60px) 0}
+.hero{grid-template-columns:minmax(300px,.8fr) minmax(0,1.2fr);gap:clamp(24px,4vw,60px)}
+.hero-copy{max-width:560px}
+h1{font-size:clamp(38px,5vw,68px);line-height:1.02;letter-spacing:-.055em}
+h1 .title-leading{display:block;margin:0;color:var(--ink);font-size:1em;letter-spacing:-.055em}
+h1 .title-accent{display:block;margin:6px 0 0;color:var(--cyan);font-size:.58em;line-height:1.08;letter-spacing:.035em}
+.intro{max-width:520px;color:var(--muted);font-size:15px;line-height:1.75}
+.hero-meta{gap:8px;margin-top:27px}
+.hero-meta div{min-width:0;padding:11px 12px;border:1px solid var(--line);border-left:3px solid var(--cyan);border-radius:9px;background:var(--meta-surface)}
+.hero-meta b{color:var(--muted);font-size:8px;letter-spacing:.12em}
+.hero-meta span{display:block;margin-top:3px;font-size:10px;font-weight:750;line-height:1.4}
+.visual-panel{position:relative;min-width:0}
+.visual-stage{position:relative;height:clamp(370px,39vw,510px);min-height:370px;overflow:hidden;isolation:isolate;border:1px solid var(--line);border-radius:19px;background:radial-gradient(ellipse at 55% 40%,var(--page-glow),transparent 56%),linear-gradient(145deg,var(--panel),var(--bg-deep));box-shadow:0 24px 58px var(--panel-shadow)}
+.visual-stage:before{position:absolute;inset:0;z-index:-1;background-image:linear-gradient(var(--visual-grid) 1px,transparent 1px),linear-gradient(90deg,var(--visual-grid) 1px,transparent 1px);background-size:34px 34px;content:"";mask-image:linear-gradient(135deg,black,transparent 82%)}
+.visual-stage:after{position:absolute;inset:12px;z-index:3;border:1px solid var(--ring-color);border-radius:12px;pointer-events:none;content:""}
+.visual-composition{position:absolute;inset:18px 18px 70px;display:grid;gap:11px;padding:7px;opacity:0;transform:translateY(12px) scale(.985);transition:opacity .7s ease,transform .85s cubic-bezier(.2,.7,.2,1);pointer-events:none}
+.visual-composition.is-active{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.visual-tile{position:relative;min-width:0;min-height:0;overflow:hidden;border:1px solid var(--line);border-radius:11px;background:var(--visual-paper);box-shadow:0 12px 24px var(--panel-shadow);animation:tile-arrive .75s both}
+.visual-tile:after{position:absolute;inset:0;border:1px solid rgba(255,255,255,.25);border-radius:inherit;pointer-events:none;content:""}
+.visual-tile img{display:block;width:100%;height:100%;padding:5px;object-fit:contain;transition:transform 1.2s ease}
+.visual-composition.is-active .visual-tile:hover img{transform:scale(1.025)}
+.visual-tile:nth-child(2){animation-delay:.08s}.visual-tile:nth-child(3){animation-delay:.16s}.visual-tile:nth-child(4){animation-delay:.24s}
+.layout-feature{grid-template-columns:1.2fr .8fr .8fr;grid-template-rows:1fr 1fr}
+.layout-feature .visual-tile:nth-child(1){grid-column:1;grid-row:1/3}.layout-feature .visual-tile:nth-child(2){grid-column:2;grid-row:1}.layout-feature .visual-tile:nth-child(3){grid-column:2;grid-row:2}.layout-feature .visual-tile:nth-child(4){grid-column:3;grid-row:1/3}
+.layout-panorama{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:1.25fr .75fr}
+.layout-panorama .visual-tile:nth-child(1){grid-column:1/4;grid-row:1}.layout-panorama .visual-tile:nth-child(2){grid-column:1;grid-row:2}.layout-panorama .visual-tile:nth-child(3){grid-column:2;grid-row:2}.layout-panorama .visual-tile:nth-child(4){grid-column:3;grid-row:2}
+.layout-mosaic{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+.layout-offset{grid-template-columns:.85fr 1.15fr;grid-template-rows:.75fr 1.25fr}
+.layout-offset .visual-tile:nth-child(1){grid-column:1;grid-row:1/3}.layout-offset .visual-tile:nth-child(2){grid-column:2;grid-row:1}.layout-offset .visual-tile:nth-child(3){grid-column:2;grid-row:2}
+.tech-overlay{position:absolute;inset:0;z-index:2;width:100%;height:100%;overflow:visible;pointer-events:none}
+.tech-overlay path,.tech-overlay line,.tech-overlay circle{fill:none;stroke:var(--cyan);stroke-width:1;opacity:.38;vector-effect:non-scaling-stroke}
+.tech-overlay .target{fill:var(--orange);stroke:none;opacity:.8}
+.visual-readout{position:absolute;left:25px;bottom:15px;z-index:4;display:grid;gap:2px;max-width:55%;text-shadow:0 2px 8px var(--panel-shadow)}
+.visual-readout span{color:var(--cyan);font:800 8px "Cascadia Code",Consolas,monospace;letter-spacing:.14em;text-transform:uppercase}
+.visual-readout strong{font-size:13px;letter-spacing:.02em}
+.visual-readout small{color:var(--muted);font-size:9px}
+.visual-controls{position:absolute;right:22px;bottom:16px;z-index:5;display:flex;align-items:center;gap:6px}
+.visual-counter{min-width:42px;margin-right:3px;color:var(--muted);font:800 9px "Cascadia Code",Consolas,monospace;text-align:center}
+.visual-controls button{display:inline-grid;place-items:center;min-width:32px;height:30px;padding:0 8px;border:1px solid var(--line);border-radius:7px;background:var(--panel);color:var(--ink);cursor:pointer}
+.visual-controls button:hover{border-color:var(--cyan);color:var(--cyan)}
+.visual-controls .visual-pause{min-width:62px;font-size:9px}
+.visual-footline{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin:10px 4px 0}
+.visual-footline .eyebrow{flex:none;font-size:8px}
+.visual-footline p{margin:0;color:var(--muted);font-size:10px;text-align:right}
+.catalog{margin-top:clamp(44px,7vh,72px)}
+.catalog-head{align-items:end}
+.catalog-head h2{color:var(--ink);font-size:15px;letter-spacing:.14em}
+.catalog-head p{color:var(--muted);font-size:12px}
+.search{width:min(100%,380px);height:44px;padding:0 14px}
+.cards{gap:14px}
+.card{border-color:var(--line);box-shadow:0 6px 20px transparent;transition:border-color .25s,box-shadow .25s,background .25s}
+.card:after{border-color:var(--ring-color);box-shadow:0 0 0 15px var(--ring-color),0 0 0 31px var(--ring-color)}
+.card.available:hover{transform:none;border-color:var(--accent);box-shadow:0 12px 30px var(--panel-shadow),0 0 0 1px var(--accent)}
+.card-state{border-color:var(--soft-cyan);color:var(--cyan)}
+.card h3{color:var(--ink)}
+.card p,.card-bottom,.empty{color:var(--muted)}
+.work-link{color:var(--cyan)}
+.empty{border-color:var(--line)}
+.footer{color:var(--muted)}
+@keyframes tile-arrive{from{opacity:.55;transform:translateY(7px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:1000px){.hero{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px}.visual-stage{height:420px;min-height:340px}.hero-meta{grid-template-columns:1fr}.hero-meta div{padding:8px 10px}.hero-meta span{font-size:10px}}
+@media(max-width:800px){.hero{grid-template-columns:1fr;gap:26px}.hero-copy{max-width:720px}.visual-stage{height:clamp(330px,58vw,440px);max-width:760px;margin:auto}.visual-footline{max-width:760px;margin-left:auto;margin-right:auto}.hero-meta{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:560px){.shell{width:calc(100% - 32px)}.topbar{align-items:center;flex-wrap:wrap}.top-actions{width:100%;justify-content:flex-end}.brand{gap:10px}.brand img{width:112px}.brand-copy{padding-left:10px}.brand-copy small{font-size:7px;letter-spacing:.1em}.brand-copy strong{font-size:8px}.theme-toggle,.language{padding:8px 9px;font-size:10px}.hero-meta{grid-template-columns:1fr;gap:7px}.hero-meta div{padding:8px 10px}.hero-meta b{font-size:8px}.hero-meta span{font-size:10px}.visual-stage{height:330px;min-height:330px}.visual-composition{inset:13px 11px 70px;grid-template-columns:1fr 1fr!important;grid-template-rows:1fr .75fr!important;gap:7px;padding:5px}.visual-tile:nth-child(1){grid-column:1/3!important;grid-row:1!important}.visual-tile:nth-child(2){grid-column:1!important;grid-row:2!important}.visual-tile:nth-child(3){grid-column:2!important;grid-row:2!important}.visual-tile:nth-child(n+4){display:none}.visual-readout{left:16px;bottom:15px;max-width:54%}.visual-readout strong{font-size:11px}.visual-readout small{font-size:8px}.visual-controls{right:13px;bottom:14px;gap:4px}.visual-controls button{min-width:28px;height:28px}.visual-controls .visual-pause{min-width:48px;padding:0 5px;font-size:8px}.visual-footline{display:block}.visual-footline p{margin-top:4px;text-align:left}.catalog-head{align-items:stretch;flex-direction:column}.search{width:100%}.cards{grid-template-columns:1fr}.card{min-height:138px}.footer{align-items:flex-start;flex-direction:column;gap:5px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="shell">
+ <header class="topbar">
+  <div class="brand">
+   <img src="./Logo Metrakys Metrology Services SIN FONDO.png" alt="Metrakys Metrology Services">
+   <div class="brand-copy"><small data-i18n="tagline">Precision · Engineering · Control</small><strong data-i18n="portalName">TECHNICAL DOCUMENTATION PORTAL</strong></div>
+  </div>
+  <div class="top-actions">
+   <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light mode"><span class="theme-glyph" aria-hidden="true">◐</span><span id="themeAction">Light mode</span></button>
+   <select class="language" id="language" aria-label="Language">
+    <option value="en">EN · English</option><option value="pt">PT · Português</option><option value="es">ES · Español</option>
+   </select>
+  </div>
+ </header>
+ <main>
+  <section class="hero" aria-labelledby="page-title">
+   <div class="hero-copy">
+    <span class="eyebrow" data-i18n="pageEyebrow">METRAKYS METROLOGY · TECHNICAL DOCUMENTATION</span>
+    <h1 id="page-title"><span class="title-leading" data-i18n="titleLeading">TECHNICAL</span><span class="title-accent" data-i18n="titleAccent">KNOWLEDGE CENTER</span></h1>
+    <p class="intro" data-i18n="intro">Explore the technical documentation of Metrakys Metrology. Access machine-specific procedures, geometric verification protocols and measurement instructions in one centralized environment.</p>
+    <div class="hero-meta">
+     <div><b data-i18n="featuredFamilyLabel">FEATURED FAMILY</b><span id="featuredFamily">ATL GANTRY</span></div>
+     <div><b data-i18n="technicalFocusLabel">TECHNICAL FOCUS</b><span id="featuredFocus">Geometric verification</span></div>
+     <div><b data-i18n="libraryLabel">LIBRARY</b><span data-i18n="libraryValue">Procedures · protocols · measurements</span></div>
+    </div>
+   </div>
+   <div class="visual-panel">
+    <div class="visual-stage" id="visualStage" role="region" aria-label="Project machine and measurement imagery">
+     <svg class="tech-overlay" viewBox="0 0 800 520" aria-hidden="true" focusable="false">
+      <path d="M24 96H112M24 96V24M688 488H776M776 488V416M142 24V52M142 38H174M626 496V468M594 482H626"/>
+      <line x1="72" y1="468" x2="168" y2="468"/><line x1="72" y1="468" x2="72" y2="392"/>
+      <path d="M72 392l-4 9m4-9 4 9M168 468l-9-4m9 4-9 4"/>
+      <circle class="target" cx="72" cy="468" r="3"/><circle cx="728" cy="78" r="17"/><circle cx="728" cy="78" r="4" class="target"/>
+     </svg>
+     <div class="visual-composition is-active" id="visualLayerA" aria-hidden="false"></div>
+     <div class="visual-composition" id="visualLayerB" aria-hidden="true"></div>
+     <div class="visual-readout"><span data-i18n="visualArchiveLabel">PROJECT VISUAL ARCHIVE</span><strong id="visualFamily">ATL GANTRY</strong><small id="visualFocus">Geometric verification</small></div>
+     <div class="visual-controls">
+      <span class="visual-counter" id="visualCounter" aria-hidden="true">01 / 04</span>
+      <button type="button" id="galleryPrevious" aria-label="Previous visual composition" title="Previous visual composition">‹</button>
+      <button type="button" id="galleryPause" class="visual-pause" aria-label="Pause visual rotation" title="Pause visual rotation">Pause</button>
+      <button type="button" id="galleryNext" aria-label="Next visual composition" title="Next visual composition">›</button>
+     </div>
+    </div>
+    <div class="visual-footline"><span class="eyebrow" data-i18n="visualSourceLabel">VISUALS FROM PROJECT SOURCE DOCUMENTS</span><p id="visualCaption">Gantry and axis-reference illustrations from the project protocols.</p></div>
+   </div>
+  </section>
+  <section class="catalog" aria-labelledby="catalog-title">
+   <div class="catalog-head">
+    <div><h2 id="catalog-title" data-i18n="catalogTitle">TECHNICAL RESOURCES</h2><p data-i18n="catalogDescription">Select a procedure or protocol. Search by machine, family or protocol.</p></div>
+    <input class="search" id="instructionSearch" type="search" data-i18n-placeholder="search" placeholder="Search work instructions..." autocomplete="off">
+   </div>
+   <div class="cards" id="instructionCards">
+    <article class="card available" data-search="fanuc gantry geometry geometrical geometric structure protocolo geometria geométrico gantry estrutura">
+     <div class="card-top"><span class="card-code">IT · ATL-9575</span><span class="card-state" data-i18n="available">Available</span></div>
+     <div><h3 data-i18n="gantryTitle">Gantry Geometric</h3><p data-i18n="gantryDescription">Structure geometrical protocol</p></div>
+     <div class="card-bottom"><span data-i18n="revisionZero">Revision 0</span><a class="work-link" href="./IT_geometry_ATL-9575.html" data-i18n="openInstruction">Open instruction →</a></div>
+    </article>
+    <article class="card available" data-search="fanuc head geometric geometrical geometrico cabeçote cabeça protocolo">
+     <div class="card-top"><span class="card-code">IT · ATL-9575</span><span class="card-state" data-i18n="available">Available</span></div>
+     <div><h3 data-i18n="headTitle">Head Geometric</h3><p data-i18n="headDescription">Head geometrical protocol</p></div>
+     <div class="card-bottom"><span data-i18n="revisionZero">Revision 0</span><a class="work-link" href="./IT_geometric_head_ATL.html" data-i18n="openInstruction">Open instruction →</a></div>
+    </article>
+    <article class="card available" data-search="siemens afp afp-9621 9621 structure geometrical geometric protocol estrutura">
+     <div class="card-top"><span class="card-code">IT · AFP-9621 · REV 3</span><span class="card-state" data-i18n="available">Available</span></div>
+     <div><h3 data-i18n="afpTitle">AFP-9621 — STRUCTURE GEOMETRICAL PROTOCOL</h3><p data-i18n="afpDescription">Revision V3</p></div>
+     <div class="card-bottom"><span>Revision V3</span><a class="work-link" href="./AFP-9621.html" data-i18n="openInstruction">Open instruction →</a></div>
+    </article>
+    <article class="card available" data-search="manual geometria manual de geometria geometry manual geometry user manual manual de geometría software usuário utilizador usuario user guia guide instrucciones instruções instructions">
+     <div class="card-top"><span class="card-code" data-i18n="geometryManualCode">GUIDE · GEOMETRY</span><span class="card-state" data-i18n="available">Available</span></div>
+     <div><h3 data-i18n="geometryManualTitle">Machine Geometry User Manual</h3><p data-i18n="geometryManualDescription">Instructions for using the machine geometry software</p></div>
+     <div class="card-bottom"><span data-i18n="geometryManualType">User guide</span><a class="work-link" href="./Manual_Usuario_Geometria_Metrakys.html" data-i18n="openInstruction">Open instruction →</a></div>
+    </article>
+   </div>
+   <p class="empty" id="noResults" data-i18n="noResults" hidden>No work instructions match your search.</p>
+  </section>
+ </main>
+ <footer class="footer"><span data-i18n="footerPortal">METRAKYS METROLOGY · TECHNICAL KNOWLEDGE CENTER</span><span data-i18n="confidential">Confidential information · follow the source document's restrictions.</span><span>METRAKYS</span></footer>
+</div>
+<script>
+const translations={
+ en:{
+  tagline:"Precision · Engineering · Control",portalName:"TECHNICAL DOCUMENTATION PORTAL",pageTitle:"Metrakys · Technical Knowledge Center",pageEyebrow:"METRAKYS METROLOGY · TECHNICAL DOCUMENTATION",titleLeading:"TECHNICAL",titleAccent:"KNOWLEDGE CENTER",languageSelectorLabel:"Language",
+  intro:"Explore the technical documentation of Metrakys Metrology. Access machine-specific procedures, geometric verification protocols and measurement instructions in one centralized environment.",
+  featuredFamilyLabel:"FEATURED FAMILY",technicalFocusLabel:"TECHNICAL FOCUS",libraryLabel:"LIBRARY",libraryValue:"Procedures · protocols · measurements",
+  visualArchiveLabel:"PROJECT VISUAL ARCHIVE",visualSourceLabel:"VISUALS FROM PROJECT SOURCE DOCUMENTS",visualRegionLabel:"Project machine and measurement imagery",
+  catalogTitle:"TECHNICAL RESOURCES",catalogDescription:"Select a procedure or protocol. Search by machine, family or protocol.",search:"Search technical documentation...",
+  themeToLight:"Light mode",themeToDark:"Dark mode",themeAriaLight:"Switch to light mode",themeAriaDark:"Switch to dark mode",galleryPrevious:"Previous visual composition",galleryNext:"Next visual composition",galleryPause:"Pause",galleryResume:"Resume",galleryReducedMotion:"Reduced motion",galleryPauseLabel:"Pause visual rotation",galleryResumeLabel:"Resume visual rotation",galleryReducedLabel:"Automatic motion disabled by your reduced-motion setting",
+  familyAtl:"ATL GANTRY",familyHead:"AFP HEAD",familyRobot:"ROBOT CELL",familyMeasurement:"MEASUREMENT PROCEDURES",
+  focusGeometry:"Geometric verification",focusRotary:"Head and rotary-axis geometry",focusCoordinate:"Machine layout and coordinate references",focusMeasurement:"Indicator, contact-point and travel references",
+  captionAtl:"Gantry and axis-reference illustrations from the project geometry protocols.",captionHead:"Head, rotary-position and A/B/C-axis illustrations from source protocols.",captionRobot:"Robot geometry and coordinate setups from the project protocol.",captionMeasurement:"Indicator, contact-point and robot-travel figures from source protocols.",
+  altAtlLayout:"ATL gantry configuration from the geometry protocol",altAtlGantry:"ATL gantry with a laser tracker in the measurement area",altAtlHeadAxes:"AFP head with labeled feed and rotary axes",altAtlTracker:"Laser emitter and interferometer in a machine-coordinate setup",altHeadPositions:"AFP head shown at two reflector positions",altHeadRotaryAxes:"AFP head with A, B and C rotary-axis references",altRobotAxes:"Robot geometry layout with X+, Y+ and Z+ references",altRobotCell:"Robot and machine-cell geometry layout",altRobotTracker:"Laser tracker setup beside a machine axis",altRobotHead:"AFP multi-roller head rendering",altAtlCpAxis:"AFP head with CP-axis reference",altAtlSquare:"Dial indicator and precision square in a measurement setup",altHeadRoller:"AFP head roller contact-point reference detail",altRobotTrace:"Robot positioning travel trace from the source protocol",altRobotTravel:"Robot measurement path trace from the source protocol",
+  available:"Available",gantryTitle:"Gantry Geometric",gantryDescription:"Structure geometrical protocol",revisionZero:"Revision 0",openInstruction:"Open instruction →",inPreparation:"In preparation",headTitle:"Head Geometric",headDescription:"Head geometrical protocol",headSource:"Source protocol received",afpTitle:"AFP-9621 — STRUCTURE GEOMETRICAL PROTOCOL",afpDescription:"Revision V3",noResults:"No work instructions match your search.",
+  geometryManualCode:"GUIDE · GEOMETRY",geometryManualTitle:"Machine Geometry User Manual",geometryManualDescription:"Instructions for using the machine geometry software",geometryManualType:"User guide",
+  footerPortal:"METRAKYS METROLOGY · TECHNICAL KNOWLEDGE CENTER",confidential:"Confidential information · follow the source document's restrictions."
+ },
+ pt:{
+  tagline:"Precisão · Engenharia · Controlo",portalName:"PORTAL DE DOCUMENTAÇÃO TÉCNICA",pageTitle:"Metrakys · Central de Conhecimento Técnico",pageEyebrow:"METRAKYS METROLOGY · DOCUMENTAÇÃO TÉCNICA",titleLeading:"CENTRO DE",titleAccent:"CONHECIMENTO TÉCNICO",languageSelectorLabel:"Idioma",
+  intro:"Explore a documentação técnica da Metrakys Metrology. Aceda a procedimentos específicos de máquinas, protocolos de verificação geométrica e instruções de medição num único ambiente centralizado.",
+  featuredFamilyLabel:"FAMÍLIA EM DESTAQUE",technicalFocusLabel:"FOCO TÉCNICO",libraryLabel:"BIBLIOTECA",libraryValue:"Procedimentos · protocolos · medições",
+  visualArchiveLabel:"ARQUIVO VISUAL DO PROJETO",visualSourceLabel:"IMAGENS DOS DOCUMENTOS-FONTE DO PROJETO",visualRegionLabel:"Imagens de máquinas e medições do projeto",
+  catalogTitle:"RECURSOS TÉCNICOS",catalogDescription:"Selecione um procedimento ou protocolo. Pesquise por máquina, família ou protocolo.",search:"Pesquisar documentação técnica...",
+  themeToLight:"Modo claro",themeToDark:"Modo escuro",themeAriaLight:"Mudar para o modo claro",themeAriaDark:"Mudar para o modo escuro",galleryPrevious:"Composição visual anterior",galleryNext:"Composição visual seguinte",galleryPause:"Pausar",galleryResume:"Retomar",galleryReducedMotion:"Movimento reduzido",galleryPauseLabel:"Pausar rotação visual",galleryResumeLabel:"Retomar rotação visual",galleryReducedLabel:"Movimento automático desativado pela preferência de movimento reduzido",
+  familyAtl:"PÓRTICO ATL",familyHead:"CABEÇOTE AFP",familyRobot:"CÉLULA ROBÓTICA",familyMeasurement:"PROCEDIMENTOS DE MEDIÇÃO",
+  focusGeometry:"Verificação geométrica",focusRotary:"Geometria do cabeçote e dos eixos rotativos",focusCoordinate:"Configuração da máquina e referenciais",focusMeasurement:"Referências de indicador, contacto e trajetória",
+  captionAtl:"Ilustrações do pórtico e dos referenciais dos protocolos de geometria do projeto.",captionHead:"Ilustrações do cabeçote, das posições rotativas e dos eixos A/B/C nos protocolos-fonte.",captionRobot:"Geometria do robô e configurações de coordenadas do protocolo do projeto.",captionMeasurement:"Figuras de indicador, pontos de contacto e trajetórias do robô nos protocolos-fonte.",
+  altAtlLayout:"Configuração do pórtico ATL no protocolo de geometria",altAtlGantry:"Pórtico ATL com Laser Tracker na zona de medição",altAtlHeadAxes:"Cabeçote AFP com eixos de alimentação e rotativos identificados",altAtlTracker:"Emissor laser e interferómetro numa configuração de coordenadas da máquina",altHeadPositions:"Cabeçote AFP apresentado em duas posições do refletor",altHeadRotaryAxes:"Cabeçote AFP com referenciais dos eixos rotativos A, B e C",altRobotAxes:"Configuração geométrica do robô com referenciais X+, Y+ e Z+",altRobotCell:"Configuração geométrica do robô e da célula da máquina",altRobotTracker:"Configuração do Laser Tracker junto a um eixo da máquina",altRobotHead:"Representação 3D de um cabeçote AFP com vários rolos",altAtlCpAxis:"Cabeçote AFP com referência do eixo CP",altAtlSquare:"Relógio comparador e esquadro de precisão numa configuração de medição",altHeadRoller:"Detalhe dos pontos de contacto dos rolos do cabeçote AFP",altRobotTrace:"Trajetória de posicionamento do robô no protocolo-fonte",altRobotTravel:"Trajetória de medição do robô no protocolo-fonte",
+  available:"Disponível",gantryTitle:"Gantry Geometric",gantryDescription:"Protocolo geométrico da estrutura",revisionZero:"Revisão 0",openInstruction:"Abrir instrução →",inPreparation:"Em preparação",headTitle:"Head Geometric",headDescription:"Protocolo geométrico do Head",headSource:"Protocolo-fonte recebido",afpTitle:"AFP-9621 — STRUCTURE GEOMETRICAL PROTOCOL",afpDescription:"Revisão V3",noResults:"Nenhuma instrução de trabalho corresponde à pesquisa.",
+  geometryManualCode:"GUIA · GEOMETRIA",geometryManualTitle:"Manual do software de geometria",geometryManualDescription:"Instruções de utilização do software de geometria de máquinas",geometryManualType:"Guia de utilização",
+  footerPortal:"METRAKYS METROLOGY · CENTRAL DE CONHECIMENTO TÉCNICO",confidential:"Informação confidencial · respeite as restrições do documento-fonte."
+ },
+ es:{
+  tagline:"Precisión · Ingeniería · Control",portalName:"PORTAL DE DOCUMENTACIÓN TÉCNICA",pageTitle:"Metrakys · Centro de Conocimiento Técnico",pageEyebrow:"METRAKYS METROLOGY · DOCUMENTACIÓN TÉCNICA",titleLeading:"CENTRO DE",titleAccent:"CONOCIMIENTO TÉCNICO",languageSelectorLabel:"Idioma",
+  intro:"Explore la documentación técnica de Metrakys Metrology. Acceda a procedimientos específicos de máquinas, protocolos de verificación geométrica e instrucciones de medición en un único entorno centralizado.",
+  featuredFamilyLabel:"FAMILIA DESTACADA",technicalFocusLabel:"ENFOQUE TÉCNICO",libraryLabel:"BIBLIOTECA",libraryValue:"Procedimientos · protocolos · mediciones",
+  visualArchiveLabel:"ARCHIVO VISUAL DEL PROYECTO",visualSourceLabel:"IMÁGENES DE LOS DOCUMENTOS FUENTE DEL PROYECTO",visualRegionLabel:"Imágenes de máquinas y mediciones del proyecto",
+  catalogTitle:"RECURSOS TÉCNICOS",catalogDescription:"Seleccione un procedimiento o protocolo. Busque por máquina, familia o protocolo.",search:"Buscar documentación técnica...",
+  themeToLight:"Modo claro",themeToDark:"Modo oscuro",themeAriaLight:"Cambiar al modo claro",themeAriaDark:"Cambiar al modo oscuro",galleryPrevious:"Composición visual anterior",galleryNext:"Composición visual siguiente",galleryPause:"Pausar",galleryResume:"Reanudar",galleryReducedMotion:"Movimiento reducido",galleryPauseLabel:"Pausar rotación visual",galleryResumeLabel:"Reanudar rotación visual",galleryReducedLabel:"Movimiento automático desactivado por la preferencia de movimiento reducido",
+  familyAtl:"PÓRTICO ATL",familyHead:"CABEZAL AFP",familyRobot:"CÉLULA ROBÓTICA",familyMeasurement:"PROCEDIMIENTOS DE MEDICIÓN",
+  focusGeometry:"Verificación geométrica",focusRotary:"Geometría del cabezal y de los ejes giratorios",focusCoordinate:"Configuración de la máquina y referencias",focusMeasurement:"Referencias de indicador, contacto y trayectoria",
+  captionAtl:"Ilustraciones del pórtico y de las referencias de los protocolos geométricos del proyecto.",captionHead:"Ilustraciones del cabezal, las posiciones giratorias y los ejes A/B/C de los protocolos fuente.",captionRobot:"Geometría del robot y configuraciones de coordenadas del protocolo del proyecto.",captionMeasurement:"Figuras de indicador, puntos de contacto y trayectorias del robot en los protocolos fuente.",
+  altAtlLayout:"Configuración del pórtico ATL en el protocolo geométrico",altAtlGantry:"Pórtico ATL con Laser Tracker en la zona de medición",altAtlHeadAxes:"Cabezal AFP con ejes de alimentación y giratorios identificados",altAtlTracker:"Emisor láser e interferómetro en una configuración de coordenadas de máquina",altHeadPositions:"Cabezal AFP mostrado en dos posiciones del reflector",altHeadRotaryAxes:"Cabezal AFP con referencias de los ejes giratorios A, B y C",altRobotAxes:"Configuración geométrica del robot con referencias X+, Y+ y Z+",altRobotCell:"Configuración geométrica del robot y de la célula de máquina",altRobotTracker:"Configuración del Laser Tracker junto a un eje de máquina",altRobotHead:"Representación 3D de un cabezal AFP con varios rodillos",altAtlCpAxis:"Cabezal AFP con referencia del eje CP",altAtlSquare:"Reloj comparador y escuadra de precisión en una configuración de medición",altHeadRoller:"Detalle de los puntos de contacto de los rodillos del cabezal AFP",altRobotTrace:"Trayectoria de posicionamiento del robot en el protocolo fuente",altRobotTravel:"Trayectoria de medición del robot en el protocolo fuente",
+  available:"Disponible",gantryTitle:"Gantry Geometric",gantryDescription:"Protocolo geométrico de la estructura",revisionZero:"Revisión 0",openInstruction:"Abrir instrucción →",inPreparation:"En preparación",headTitle:"Head Geometric",headDescription:"Protocolo geométrico del Head",headSource:"Protocolo fuente recibido",afpTitle:"AFP-9621 — STRUCTURE GEOMETRICAL PROTOCOL",afpDescription:"Revisión V3",noResults:"Ninguna instrucción de trabajo coincide con la búsqueda.",
+  geometryManualCode:"GUÍA · GEOMETRÍA",geometryManualTitle:"Manual del software de geometría",geometryManualDescription:"Instrucciones de uso del software de geometría de máquinas",geometryManualType:"Guía de uso",
+  footerPortal:"METRAKYS METROLOGY · CENTRO DE CONOCIMIENTO TÉCNICO",confidential:"Información confidencial · respete las restricciones del documento fuente."
+ }
+};
+const languageSelect=document.getElementById("language");
+const searchInput=document.getElementById("instructionSearch");
+const cards=Array.from(document.querySelectorAll(".card"));
+const noResults=document.getElementById("noResults");
+const themeButton=document.getElementById("themeToggle");
+const themeAction=document.getElementById("themeAction");
+const themeColor=document.querySelector('meta[name="theme-color"]');
+const galleryLayers=[document.getElementById("visualLayerA"),document.getElementById("visualLayerB")];
+const motionPreference=window.matchMedia("(prefers-reduced-motion: reduce)");
+const galleryScenes=[
+ {layout:"layout-feature",familyKey:"familyAtl",focusKey:"focusGeometry",captionKey:"captionAtl",images:[
+  {src:"./technical-knowledge-assets/atl-gantry-layout.jpg",altKey:"altAtlLayout"},
+  {src:"./ATL-9575_Gantry.png",altKey:"altAtlGantry"},
+  {src:"./technical-knowledge-assets/atl-tracker-coordinate-setup.jpg",altKey:"altAtlTracker"},
+  {src:"./technical-knowledge-assets/atl-dial-indicator-square-setup.jpg",altKey:"altAtlSquare"}
+ ]},
+ {layout:"layout-panorama",familyKey:"familyHead",focusKey:"focusRotary",captionKey:"captionHead",images:[
+  {src:"./ATL-9575_Head_cp-axis.jpg",altKey:"altAtlCpAxis"},
+  {src:"./ATL-9575_Head_axes.jpg",altKey:"altAtlHeadAxes"},
+  {src:"./technical-knowledge-assets/atl-head-rotary-positions.jpg",altKey:"altHeadPositions"},
+  {src:"./technical-knowledge-assets/atl-head-rotary-axes.jpg",altKey:"altHeadRotaryAxes"}
+ ]},
+ {layout:"layout-mosaic",familyKey:"familyRobot",focusKey:"focusCoordinate",captionKey:"captionRobot",images:[
+  {src:"./technical-knowledge-assets/robot-cell-layout.jpg",altKey:"altRobotCell"},
+  {src:"./technical-knowledge-assets/robot-axis-setup.jpg",altKey:"altRobotAxes"},
+  {src:"./technical-knowledge-assets/robot-laser-tracker-setup.jpg",altKey:"altRobotTracker"},
+  {src:"./technical-knowledge-assets/robot-head-detail.jpg",altKey:"altRobotHead"}
+ ]},
+ {layout:"layout-offset",familyKey:"familyMeasurement",focusKey:"focusMeasurement",captionKey:"captionMeasurement",images:[
+  {src:"./technical-knowledge-assets/atl-head-roller-reference.jpg",altKey:"altHeadRoller"},
+  {src:"./technical-knowledge-assets/robot-positioning-trace.jpg",altKey:"altRobotTrace"},
+  {src:"./technical-knowledge-assets/robot-travel-trace.jpg",altKey:"altRobotTravel"}
+ ]}
+];
+let currentLanguage="en";
+let galleryIndex=0;
+let activeLayer=1;
+let galleryTimer=null;
+let galleryPaused=motionPreference.matches;
+function currentDictionary(){return translations[currentLanguage]||translations.en}
+function setTheme(theme,persist=true){
+ const nextTheme=theme==="light"?"light":"dark";
+ document.documentElement.dataset.theme=nextTheme;
+ themeColor.content=nextTheme==="light"?"#f1f5f8":"#07111e";
+ updateThemeControl();
+ if(persist){try{localStorage.setItem("metrakys.technical-center.theme",nextTheme)}catch(error){console.warn("Could not save the selected theme.",error)}}
+}
+function updateThemeControl(){
+ const dictionary=currentDictionary();
+ const isDark=document.documentElement.dataset.theme!=="light";
+ themeAction.textContent=dictionary[isDark?"themeToLight":"themeToDark"];
+ themeButton.setAttribute("aria-label",dictionary[isDark?"themeAriaLight":"themeAriaDark"]);
+ themeButton.setAttribute("aria-pressed",String(!isDark));
+}
+function updateGalleryText(){
+ const dictionary=currentDictionary();
+ const scene=galleryScenes[galleryIndex];
+ document.getElementById("visualStage").setAttribute("aria-label",dictionary.visualRegionLabel);
+ document.getElementById("visualFamily").textContent=dictionary[scene.familyKey];
+ document.getElementById("visualFocus").textContent=dictionary[scene.focusKey];
+ document.getElementById("visualCaption").textContent=dictionary[scene.captionKey];
+ document.getElementById("featuredFamily").textContent=dictionary[scene.familyKey];
+ document.getElementById("featuredFocus").textContent=dictionary[scene.focusKey];
+ document.getElementById("visualCounter").textContent=`${String(galleryIndex+1).padStart(2,"0")} / ${String(galleryScenes.length).padStart(2,"0")}`;
+ galleryLayers[activeLayer].querySelectorAll("img[data-alt-key]").forEach(image=>{image.alt=dictionary[image.dataset.altKey]});
+ const previous=document.getElementById("galleryPrevious"),next=document.getElementById("galleryNext"),pause=document.getElementById("galleryPause");
+ previous.setAttribute("aria-label",dictionary.galleryPrevious);previous.title=dictionary.galleryPrevious;
+ next.setAttribute("aria-label",dictionary.galleryNext);next.title=dictionary.galleryNext;
+ pause.disabled=motionPreference.matches;
+ pause.textContent=motionPreference.matches?dictionary.galleryReducedMotion:dictionary[galleryPaused?"galleryResume":"galleryPause"];
+ pause.setAttribute("aria-label",motionPreference.matches?dictionary.galleryReducedLabel:dictionary[galleryPaused?"galleryResumeLabel":"galleryPauseLabel"]);
+ pause.title=pause.getAttribute("aria-label");
+}
+function renderGallery(index,immediate=false){
+ const nextIndex=(index+galleryScenes.length)%galleryScenes.length,scene=galleryScenes[nextIndex];
+ const incomingLayer=activeLayer===0?1:0,outgoingLayer=galleryLayers[activeLayer],incoming=galleryLayers[incomingLayer],dictionary=currentDictionary();
+ incoming.className=`visual-composition ${scene.layout}`;
+ incoming.setAttribute("aria-hidden","false");
+ incoming.innerHTML=scene.images.map((image,imageIndex)=>`<div class="visual-tile"><img src="${image.src}" alt="${dictionary[image.altKey]}" data-alt-key="${image.altKey}" loading="${imageIndex===0?"eager":"lazy"}" decoding="async"></div>`).join("");
+ incoming.querySelectorAll("img").forEach(image=>image.addEventListener("error",()=>console.warn("Could not load a technical-center gallery image.",image.src),{once:true}));
+ galleryIndex=nextIndex;
+ if(immediate){incoming.classList.add("is-active");outgoingLayer.className="visual-composition";outgoingLayer.setAttribute("aria-hidden","true");outgoingLayer.replaceChildren()}
+ else{
+  requestAnimationFrame(()=>{incoming.classList.add("is-active");outgoingLayer.classList.remove("is-active");outgoingLayer.setAttribute("aria-hidden","true")});
+  window.setTimeout(()=>{if(!outgoingLayer.classList.contains("is-active"))outgoingLayer.replaceChildren()},900);
+ }
+ activeLayer=incomingLayer;
+ updateGalleryText();
+}
+function stopGalleryTimer(){if(galleryTimer!==null){window.clearInterval(galleryTimer);galleryTimer=null}}
+function startGalleryTimer(){if(motionPreference.matches||galleryPaused||galleryTimer!==null)return;galleryTimer=window.setInterval(()=>{if(!document.hidden)renderGallery(galleryIndex+1)},7000)}
+function setLanguage(language,persist=true){
+ currentLanguage=translations[language]?language:"en";
+ const dictionary=currentDictionary();
+ document.documentElement.lang=currentLanguage;
+ document.title=dictionary.pageTitle;
+ document.querySelectorAll("[data-i18n]").forEach(element=>{const translation=dictionary[element.dataset.i18n];if(translation)element.textContent=translation});
+ searchInput.placeholder=dictionary.search;
+ languageSelect.setAttribute("aria-label",dictionary.languageSelectorLabel);
+ languageSelect.value=currentLanguage;
+ updateThemeControl();
+ updateGalleryText();
+ if(persist){try{localStorage.setItem("metrakys.atl9575.catalog.language",currentLanguage)}catch(error){console.warn("Could not save catalog language preference.",error)}}
+}
+function filterInstructions(){
+ const normalize=value=>value.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase();
+ const query=normalize(searchInput.value.trim());
+ let visible=0;
+ cards.forEach(card=>{const matches=normalize(card.dataset.search).includes(query);card.hidden=!matches;if(matches)visible++});
+ noResults.hidden=visible!==0;
+}
+function handleMotionPreference(){
+ if(motionPreference.matches){galleryPaused=true;stopGalleryTimer()}
+ else{galleryPaused=false;startGalleryTimer()}
+ updateGalleryText();
+}
+languageSelect.addEventListener("change",()=>setLanguage(languageSelect.value));
+searchInput.addEventListener("input",filterInstructions);
+themeButton.addEventListener("click",()=>setTheme(document.documentElement.dataset.theme==="light"?"dark":"light"));
+document.getElementById("galleryPrevious").addEventListener("click",()=>renderGallery(galleryIndex-1));
+document.getElementById("galleryNext").addEventListener("click",()=>renderGallery(galleryIndex+1));
+document.getElementById("galleryPause").addEventListener("click",()=>{if(motionPreference.matches)return;galleryPaused=!galleryPaused;if(galleryPaused)stopGalleryTimer();else startGalleryTimer();updateGalleryText()});
+document.addEventListener("visibilitychange",()=>{if(document.hidden)stopGalleryTimer();else startGalleryTimer()});
+if(motionPreference.addEventListener)motionPreference.addEventListener("change",handleMotionPreference);else if(motionPreference.addListener)motionPreference.addListener(handleMotionPreference);
+try{setLanguage(localStorage.getItem("metrakys.atl9575.catalog.language")||"en",false)}catch(error){console.warn("Could not load catalog language preference.",error);setLanguage("en",false)}
+renderGallery(0,true);
+setTheme(document.documentElement.dataset.theme||"dark",false);
+startGalleryTimer();
+</script>
+</body>
+</html>
