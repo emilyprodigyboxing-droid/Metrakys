@@ -1301,12 +1301,10 @@ const localePhrases={
 };
 const localeIndexes={pt:0,en:1,es:2};
 const calibrationCertificateSources={
- LEICA:'certificados/laser-tracker-leica.png',
- FARO:'certificados/laser-tracker-faro.pdf'
+ LEICA:'laser-tracker-leica.png',
+ FARO:'laser-tracker-faro.pdf'
 };
-const operatorSignatureSources={
- 'Emily Bailo Gonçalves':'assinaturas/emily.png'
-};
+const operatorSignatureSources={};
 const phrasePattern=new RegExp(Object.keys(localePhrases).sort((a,b)=>b.length-a.length).map(phrase=>phrase.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|'),'g');
 let currentLanguage='es';
 const originalTextNodes=new WeakMap();
