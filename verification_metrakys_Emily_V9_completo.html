@@ -225,6 +225,7 @@ footer{font-size:12px;color:#687386;margin-top:18px}
 .certificate-section h4{margin:0 0 12px}
 .certificate-image,.certificate-frame{display:block;width:100%;height:1000px;border:1px solid #cbd3dd;border-radius:6px;background:#f5f7fa}
 .certificate-image{object-fit:contain}
+.certificate-pdf-print{display:none}
 .operator-signature-section{display:none!important;margin:18px 0;padding:16px;border:1px solid #cbd3dd;border-radius:10px;background:#fff}
 .operator-signature-section h4{margin:0 0 3mm}
 .operator-signature-block{break-inside:avoid}
@@ -359,6 +360,8 @@ footer{font-size:12px;color:#687386;margin-top:18px}
  body.print-active #certificateSection .certificate-image,
  body.print-active #certificateSection .certificate-frame{width:100%;height:250mm;max-height:250mm;border:0}
  body.print-active #certificateSection .certificate-image{width:100%;height:250mm;max-height:250mm;border:0;object-fit:contain}
+ body.print-active #certificateSection .certificate-frame{display:none}
+ body.print-active #certificateSection .certificate-pdf-print[src]{display:block}
 }
 </style>
 </head>
@@ -658,6 +661,7 @@ footer{font-size:12px;color:#687386;margin-top:18px}
 <h4>Certificado de calibração</h4>
 <img id="calibrationCertificateImage" class="certificate-image" alt="Certificado de calibração do equipamento selecionado" hidden>
 <iframe id="calibrationCertificatePdf" class="certificate-frame" title="Certificado de calibração do equipamento selecionado" hidden></iframe>
+<img id="calibrationCertificatePdfPrint" class="certificate-image certificate-pdf-print" alt="Certificado de calibração do equipamento selecionado">
 </section>
 <section class="card" id="printSection">
   <h3>6. Imprimir relatório</h3>
@@ -778,6 +782,7 @@ const localePhrases={
  'Equipamento utilizado no ensaio':['Equipamento utilizado no ensaio','Equipment used for the test','Equipo utilizado en el ensayo'],
  'Certificado de calibração':['Certificado de calibração','Calibration certificate','Certificado de calibración'],
  'Certificado de calibração do equipamento selecionado':['Certificado de calibração do equipamento selecionado','Calibration certificate for the selected equipment','Certificado de calibración del equipo seleccionado'],
+ 'Não foi possível carregar o certificado de calibração para impressão.':['Não foi possível carregar o certificado de calibração para impressão.','Could not load the calibration certificate for printing.','No se pudo cargar el certificado de calibración para imprimir.'],
  'Adicionar avaliação':['Adicionar avaliação','Add assessment','Añadir evaluación'],
  'Calcular avaliações':['Calcular avaliações','Calculate assessments','Calcular evaluaciones'],
  '3. Resultados':['3. Resultados','3. Results','3. Resultados'],
@@ -1301,8 +1306,11 @@ const localePhrases={
 };
 const localeIndexes={pt:0,en:1,es:2};
 const calibrationCertificateSources={
- LEICA:'certificados/laser-tracker-leica.png',
- FARO:'certificados/laser-tracker-faro.pdf'
+ LEICA:'laser-tracker-leica.png',
+ FARO:'laser-tracker-faro.pdf'
+};
+const calibrationCertificatePrintSources={
+ FARO:'laser-tracker-faro-print.png'
 };
 const operatorSignatureSources={
  'Emily Bailo Gonçalves':'assinaturas/Emily.png',
@@ -2896,12 +2904,14 @@ function renderCalibrationCertificate(){
  const section=$('certificateSection');
  const image=$('calibrationCertificateImage');
  const pdf=$('calibrationCertificatePdf');
+ const pdfPrint=$('calibrationCertificatePdfPrint');
  if(!manufacturer||!source){
   section.hidden=true;
   image.hidden=true;
   image.removeAttribute('src');
   pdf.hidden=true;
   pdf.removeAttribute('src');
+  pdfPrint.removeAttribute('src');
   return;
  }
  section.hidden=false;
@@ -2911,8 +2921,12 @@ function renderCalibrationCertificate(){
  if(isPdf){
   image.removeAttribute('src');
   if(pdf.getAttribute('src')!==source)pdf.setAttribute('src',source);
+  const printSource=calibrationCertificatePrintSources[manufacturer];
+  if(printSource&&pdfPrint.getAttribute('src')!==printSource)pdfPrint.setAttribute('src',printSource);
+  if(!printSource)pdfPrint.removeAttribute('src');
  }else{
   pdf.removeAttribute('src');
+  pdfPrint.removeAttribute('src');
   if(image.getAttribute('src')!==source)image.setAttribute('src',source);
  }
 }
@@ -6083,6 +6097,18 @@ printOptionIds.forEach(id=>$(id).addEventListener('change',()=>{
 }));
 $('printReport').addEventListener('click',async()=>{
  if(!preparePrintReport())return;
+ if($('certificateSection').classList.contains('print-show')){
+  const certificateImage=$('calibrationCertificatePdf').hidden
+   ?$('calibrationCertificateImage')
+   :$('calibrationCertificatePdfPrint');
+  try{
+   await certificateImage.decode();
+  }catch(error){
+   restoreAfterPrint();
+   alert(localePhrases['Não foi possível carregar o certificado de calibração para impressão.'][localeIndexes[currentLanguage]]);
+   return;
+  }
+ }
  const signatureImage=$('operatorSignatureImage');
  if($('operatorSignatureSection').classList.contains('print-show')&&!signatureImage.hidden){
   try{
